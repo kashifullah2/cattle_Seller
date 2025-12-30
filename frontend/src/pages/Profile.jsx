@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import { AuthContext } from '../context/AuthContext';
-import { User, Camera, Save } from 'lucide-react';
+import { Camera, Save } from 'lucide-react';
 import api from '../api';
 
 const Profile = () => {
@@ -27,7 +25,7 @@ const Profile = () => {
 
     try {
       const res = await api.put('/users/me/image', formData);
-      updateUserImage(res.data.image_url); // Update Context & Navbar
+      updateUserImage(res.data.image_url);
       alert("Profile image updated successfully!");
     } catch (err) {
       alert("Failed to upload image.");
@@ -38,7 +36,8 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
+      {/* Navbar Removed */}
+      
       <div className="flex-grow max-w-2xl mx-auto w-full px-4 py-12">
         <div className="bg-white rounded-xl shadow p-8 text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-6">My Profile</h1>
@@ -70,7 +69,8 @@ const Profile = () => {
 
         </div>
       </div>
-      <Footer />
+      
+      {/* Footer Removed */}
     </div>
   );
 };

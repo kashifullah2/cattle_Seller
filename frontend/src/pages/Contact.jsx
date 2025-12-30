@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import api from '../api';
 import { Send, Mail } from 'lucide-react';
 
@@ -24,7 +22,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
+      {/* Navbar Removed (Handled by Layout) */}
       
       <div className="flex-grow max-w-3xl mx-auto w-full px-4 py-12">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -68,7 +66,7 @@ const Contact = () => {
         </div>
       </div>
       
-      <Footer />
+      {/* Footer Removed (Handled by Layout) */}
     </div>
   );
 };
