@@ -13,8 +13,12 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), nullable=False)
+    name = Column(String(100), nullable=False) # This is the "Username"
+    email = Column(String(100), unique=True, index=True, nullable=False) # <--- NEW: Login via Email
     phone = Column(String(20), unique=True, index=True, nullable=False)
+    gender = Column(String(10), nullable=True)  # <--- NEW
+    address = Column(String(255), nullable=True) # <--- NEW
+    
     hashed_password = Column(String(255), nullable=False)
     is_verified = Column(Boolean, default=False)
     profile_image = Column(String(255), nullable=True)
@@ -28,12 +32,9 @@ class Animal(Base):
     id = Column(Integer, primary_key=True, index=True)
     seller_id = Column(Integer, ForeignKey("users.id"))
     
-    # --- NEW: Name Field ---
-    name = Column(String(100), nullable=True) # e.g. "Bella", "Raju"
-    # -----------------------
-    
+    name = Column(String(100), nullable=True)
     animal_type = Column(String(50), index=True)
-    breed = Column(String(100)) # Ensure this exists if you added it previously
+    breed = Column(String(100))
     price = Column(Float, index=True)
     weight = Column(Float)
     color = Column(String(50))

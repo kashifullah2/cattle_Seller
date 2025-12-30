@@ -66,7 +66,6 @@ const Contact = () => {
         </div>
       </div>
       
-      {/* Footer Removed (Handled by Layout) */}
     </div>
   );
 };

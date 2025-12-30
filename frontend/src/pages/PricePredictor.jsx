@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import api from '../api'; // Removed Navbar import
-import { Calculator, TrendingUp, Info } from 'lucide-react';
+import api from '../api';
+import { Calculator, TrendingUp, Info, AlertTriangle, Scale, Palette, Calendar, FileText } from 'lucide-react';
 
 const PricePredictor = () => {
   const [loading, setLoading] = useState(false);
@@ -41,85 +41,180 @@ const PricePredictor = () => {
       setPrediction(res.data.estimated_price);
     } catch (err) {
       console.error(err);
-      setError("Could not generate prediction. Please ensure the backend is running.");
+      setError("Could not generate prediction. Ensure backend is running.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navbar Removed from here */}
+    <div className="min-h-screen bg-[#f8fafc] py-12 px-4">
       
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-extrabold text-green-800 flex justify-center items-center gap-3">
-            <Calculator size={32} />
-            AI Price Estimator
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Use our Machine Learning model to check the estimated market value of your animal.
-          </p>
+      {/* Header Section */}
+      <div className="max-w-4xl mx-auto text-center mb-12">
+        <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-bold mb-4 shadow-sm">
+          <Calculator size={16} /> Beta Version
+        </div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          AI Price <span className="text-green-600">Estimator</span>
+        </h1>
+        <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          Use our Machine Learning model to get an instant market value estimation. 
+          <br/>
+          <span className="font-semibold text-gray-800">Currently optimized for Cattle (Cows / Bulls) only.</span>
+        </p>
+      </div>
+
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        
+        {/* Left Side: Form */}
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+          <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+            <div className="bg-green-50 p-2.5 rounded-xl">
+               <TrendingUp className="text-green-600" size={24} />
+            </div>
+            <div>
+               <h2 className="text-xl font-bold text-gray-900">Enter Animal Details</h2>
+               <p className="text-xs text-gray-400">Provide accurate data for best results</p>
+            </div>
+          </div>
+          
+          <form onSubmit={handlePredict} className="space-y-6">
+            
+            {/* Disclaimer */}
+            <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-4 flex gap-3">
+               <AlertTriangle className="text-yellow-600 flex-shrink-0" size={20} />
+               <p className="text-sm text-yellow-800 leading-snug">
+                 <strong>Note:</strong> This model is trained specifically for <strong>Cattle (Cows/Bulls)</strong>. Predictions for <strong>Goats or Sheep</strong> may be inaccurate. <strong>Support for additional animals will be added in future updates.</strong>
+               </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Breed</label>
+              <div className="relative">
+                <FileText className="absolute top-3.5 left-4 text-gray-400" size={18} />
+                <input 
+                  type="text" 
+                  name="breed" 
+                  placeholder="e.g. Sahiwal, Cholistani" 
+                  className="modern-input pl-12" 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Weight (kg)</label>
+                <div className="relative">
+                  <Scale className="absolute top-3.5 left-4 text-gray-400" size={18} />
+                  <input 
+                    type="number" 
+                    name="weight" 
+                    placeholder="e.g. 350" 
+                    className="modern-input pl-12" 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Age</label>
+                <div className="relative">
+                  <Calendar className="absolute top-3.5 left-4 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    name="age" 
+                    placeholder="e.g. 2 years" 
+                    className="modern-input pl-12" 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Color</label>
+              <div className="relative">
+                <Palette className="absolute top-3.5 left-4 text-gray-400" size={18} />
+                <input 
+                  type="text" 
+                  name="color" 
+                  placeholder="e.g. Black, White, Red" 
+                  className="modern-input pl-12" 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+            </div>
+
+            <button type="submit" disabled={loading} className="btn-gradient w-full py-4 text-lg">
+              {loading ? 'Calculating...' : 'Check Price'}
+            </button>
+          </form>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          {/* Form Section */}
-          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-            <h2 className="text-xl font-bold text-gray-800 mb-6">Enter Animal Details</h2>
+        {/* Right Side: Result Area */}
+        <div className="flex flex-col gap-6">
             
-            <form onSubmit={handlePredict} className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
-                <input type="text" name="breed" placeholder="e.g. Red Chittagong" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" onChange={handleChange} required />
+            {/* The Result Card */}
+            <div className={`relative bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-500 ${prediction ? 'opacity-100 translate-y-0' : 'opacity-50 translate-y-4'}`}>
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+              
+              <div className="p-10 text-center">
+                 {prediction !== null ? (
+                   <>
+                     <p className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-4">Estimated Market Price</p>
+                     <div className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-2">
+                       {new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(prediction)}
+                     </div>
+                     <p className="text-green-600 font-medium bg-green-50 inline-block px-4 py-1 rounded-full text-sm mt-4">
+                        Based on recent market data
+                     </p>
+                   </>
+                 ) : (
+                   <div className="py-10">
+                     <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-300">
+                        <Calculator size={32} />
+                     </div>
+                     <h3 className="text-xl font-bold text-gray-400">No Prediction Yet</h3>
+                     <p className="text-gray-400 mt-2 text-sm">Fill out the form to see the magic.</p>
+                   </div>
+                 )}
               </div>
+            </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
-                  <input type="number" name="weight" placeholder="217" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" onChange={handleChange} required />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
-                  <input type="text" name="age" placeholder="2.5 years" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" onChange={handleChange} required />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
-                <input type="text" name="color" placeholder="Red" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" onChange={handleChange} required />
-              </div>
-
-              <button type="submit" disabled={loading} className="w-full bg-green-700 text-white py-3 rounded-lg font-bold text-lg hover:bg-green-800 transition shadow-md disabled:bg-gray-400">
-                {loading ? 'Calculating...' : 'Check Price'}
-              </button>
-            </form>
-          </div>
-
-          {/* Result Section */}
-          <div className="flex flex-col justify-center">
-            {prediction !== null ? (
-              <div className="bg-white p-8 rounded-xl shadow-lg border-2 border-green-500 text-center">
-                <h3 className="text-gray-500 font-medium uppercase tracking-wider text-sm">Estimated Market Price</h3>
-                <div className="text-5xl font-extrabold text-green-700 my-4">
-                  {new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR', maximumFractionDigits: 0 }).format(prediction)}
-                </div>
-                <div className="flex items-center justify-center gap-2 text-green-600 bg-green-50 py-2 rounded-lg">
-                  <TrendingUp size={20} />
-                  <span className="font-semibold">Based on AI Model</span>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-blue-50 p-8 rounded-xl border border-blue-200 text-center opacity-80">
-                 <Info className="mx-auto text-blue-500 mb-3" size={40} />
-                 <h3 className="text-lg font-semibold text-blue-800">How it works</h3>
-                 <p className="text-blue-600 mt-2 text-sm">Enter details to get an AI prediction.</p>
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 text-center text-sm font-medium animate-pulse">
+                {error}
               </div>
             )}
-            {error && <div className="mt-4 bg-red-50 text-red-600 p-4 rounded-lg border border-red-200 text-center">{error}</div>}
-          </div>
+
+            {/* Info Card */}
+            <div className="bg-blue-900 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
+               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-5 rounded-full -ml-10 -mb-10"></div>
+               
+               <div className="relative z-10 flex gap-4">
+                 <div className="bg-white/20 p-3 rounded-xl h-fit">
+                    <Info size={24} className="text-white" />
+                 </div>
+                 <div>
+                   <h3 className="font-bold text-lg mb-2">How it works?</h3>
+                   <p className="text-blue-100 text-sm leading-relaxed">
+                     Our AI analyzes thousands of recent cattle sales in Pakistan to estimate price based on breed, weight, and visual characteristics. 
+                     <br/><br/>
+                     <span className="opacity-70 text-xs">Accuracy depends on market fluctuations.</span>
+                   </p>
+                 </div>
+               </div>
+            </div>
 
         </div>
+
       </div>
     </div>
   );

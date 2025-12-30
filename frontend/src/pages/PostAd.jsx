@@ -15,17 +15,8 @@ const PostAd = () => {
   }, [user, authLoading, navigate]);
 
   const [formData, setFormData] = useState({
-    name: '', 
-    animal_type: 'Goat', 
-    breed: '', 
-    age: '', 
-    price: '', 
-    weight: '', 
-    color: '', 
-    city: '', 
-    description: ''
+    animal_type: 'Goat', breed: '', age: '', price: '', weight: '', color: '', city: '', description: ''
   });
-  
   const [files, setFiles] = useState([]);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,11 +36,8 @@ const PostAd = () => {
         data.append('color', formData.color);
         const res = await api.post('/predict-price/', data);
         setFormData(prev => ({ ...prev, price: res.data.estimated_price }));
-    } catch (error) { 
-      alert("Could not predict price."); 
-    } finally { 
-      setPredicting(false); 
-    }
+    } catch (error) { alert("Could not predict price."); } 
+    finally { setPredicting(false); }
   };
 
   const handleSubmit = async (e) => {
@@ -63,11 +51,8 @@ const PostAd = () => {
     try {
       await api.post('/animals/', data, { headers: { 'Content-Type': 'multipart/form-data' } });
       navigate('/');
-    } catch (error) { 
-      alert('Failed to upload ad.'); 
-    } finally { 
-      setLoading(false); 
-    }
+    } catch (error) { alert('Failed to upload ad.'); } 
+    finally { setLoading(false); }
   };
 
   if (authLoading) return null; 
@@ -83,7 +68,6 @@ const PostAd = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           
-          {/* Section 1 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
             <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
               <Tag size={20} className="text-green-600"/> Basic Information
@@ -116,19 +100,15 @@ const PostAd = () => {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Animal Name <span className="text-gray-400 font-normal">(Optional)</span></label>
-                <input type="text" name="name" placeholder="e.g. Bella, Raju" onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
-              </div>
+              {/* REMOVED NAME FIELD HERE */}
 
-              <div>
+              <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
                 <input type="text" name="breed" placeholder="e.g. Sahiwal" required onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
               </div>
             </div>
           </div>
 
-          {/* Section 2 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
             <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
               <Info size={20} className="text-green-600"/> Physical Details
@@ -150,7 +130,6 @@ const PostAd = () => {
             </div>
           </div>
 
-          {/* Section 3 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
             <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
               <DollarSign size={20} className="text-green-600"/> Price & Location
@@ -177,7 +156,6 @@ const PostAd = () => {
             </div>
           </div>
 
-          {/* Section 4 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
             <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
               <FileText size={20} className="text-green-600"/> Description & Media
