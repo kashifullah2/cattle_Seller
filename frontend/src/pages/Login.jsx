@@ -17,7 +17,8 @@ const Login = () => {
     setError('');
     try {
       const res = await api.post('/login', { phone, password });
-      login(res.data.access_token, res.data.user_name, res.data.user_id);
+      // Add the 4th argument: res.data.profile_image
+      login(res.data.access_token, res.data.user_name, res.data.user_id, res.data.profile_image);
       navigate('/');
     } catch (err) {
       setError('Invalid Phone Number or Password');

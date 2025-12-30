@@ -11,7 +11,7 @@ from sqlalchemy import or_
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from ml_utils import predict_animal_price
-
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, status
 import models, schemas, database
 
 # --- Configuration ---
@@ -291,5 +291,67 @@ def report_ad(
     print(f"REPORT: User {current_user.id} reported Animal {animal_id} for: {reason}")
     return {"message": "Report received. Admin will review."}
 
-# ... [Keep existing DELETE, POST, GET list endpoints] ...
-# NOTE: Make sure the DELETE endpoint is still there from previous steps.
+@app.post("/signup", response_model=schemas.Token)
+def signup(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.User).filter(models.User.phone == user.phone).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Phone number already registered")
+    
+    hashed_pw = get_password_hash(user.password)
+    # Default profile image is None
+    new_user = models.User(name=user.name, phone=user.phone, hashed_password=hashed_pw)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    access_token = create_access_token(data={"sub": new_user.phone})
+    return {
+        "access_token": access_token, 
+        "token_type": "bearer", 
+        "user_name": new_user.name, 
+        "user_id": new_user.id,
+        "profile_image": new_user.profile_image
+    }
+
+@app.post("/login", response_model=schemas.Token)
+def login(user_data: schemas.UserLogin, db: Session = Depends(database.get_db)):
+    user = db.query(models.User).filter(models.User.phone == user_data.phone).first()
+    if not user or not verify_password(user_data.password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Invalid phone or password")
+    
+    access_token = create_access_token(data={"sub": user.phone})
+    return {
+        "access_token": access_token, 
+        "token_type": "bearer", 
+        "user_name": user.name, 
+        "user_id": user.id,
+        "profile_image": user.profile_image
+    }
+
+# --- NEW: USER PROFILE IMAGE ENDPOINT ---
+@app.put("/users/me/image")
+def update_profile_image(
+    file: UploadFile = File(...),
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    # Save file
+    file_location = f"static/uploads/user_{current_user.id}_{file.filename}"
+    with open(file_location, "wb+") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    
+    image_url = f"http://localhost:8000/{file_location}"
+    
+    # Update DB
+    current_user.profile_image = image_url
+    db.commit()
+    
+    return {"image_url": image_url}
+
+# --- NEW: CONTACT FORM ENDPOINT ---
+@app.post("/contact")
+def contact_developer(msg: schemas.ContactMessage):
+    # In a real app, you would send an email here.
+    # For now, we log it to the console.
+    print(f"📩 NEW CONTACT MSG from {msg.name} ({msg.email}): {msg.message}")
+    return {"message": "Message sent successfully!"}

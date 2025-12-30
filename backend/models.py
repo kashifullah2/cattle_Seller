@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
 
-# Association Table for Favorites (Many-to-Many)
 favorites = Table(
     'favorites', Base.metadata,
     Column('user_id', Integer, ForeignKey('users.id')),
@@ -19,6 +18,10 @@ class User(Base):
     hashed_password = Column(String(255), nullable=False)
     is_verified = Column(Boolean, default=False)
     
+    # --- NEW: Profile Image ---
+    profile_image = Column(String(255), nullable=True)
+    # --------------------------
+
     animals = relationship("Animal", back_populates="seller")
     favorited_animals = relationship("Animal", secondary=favorites, back_populates="favorited_by")
 
@@ -34,12 +37,8 @@ class Animal(Base):
     color = Column(String(50))
     city = Column(String(100), index=True)
     description = Column(Text)
-    
-    # --- NEW FEATURES ---
-    views = Column(Integer, default=0)         # Feature 4: View Counter
-    is_sold = Column(Boolean, default=False)   # Feature 2: Mark as Sold
-    # --------------------
-
+    views = Column(Integer, default=0)
+    is_sold = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     seller = relationship("User", back_populates="animals")

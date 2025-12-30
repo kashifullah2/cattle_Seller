@@ -11,9 +11,15 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     const userName = localStorage.getItem('userName');
     const userId = localStorage.getItem('userId');
+    const userImg = localStorage.getItem('userImg'); // <--- New
     
     if (token && userName && userId) {
-      setUser({ name: userName, token: token, id: parseInt(userId) });
+      setUser({ 
+        name: userName, 
+        token: token, 
+        id: parseInt(userId),
+        image: userImg === "null" ? null : userImg 
+      });
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
       setUser(null);
@@ -21,27 +27,30 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (token, userName, userId) => {
+  const login = (token, userName, userId, userImg) => { // <--- Updated args
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId);
+    localStorage.setItem('userImg', userImg); // <--- Save Image
     
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setUser({ name: userName, token: token, id: userId });
+    setUser({ name: userName, token: token, id: userId, image: userImg });
   };
 
+  const updateUserImage = (newUrl) => {
+    localStorage.setItem('userImg', newUrl);
+    setUser((prev) => ({ ...prev, image: newUrl }));
+  }
+
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userId');
-    
+    localStorage.clear(); // Clear all
     delete api.defaults.headers.common['Authorization'];
     setUser(null);
     window.location.href = '/';
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, updateUserImage }}>
       {children}
     </AuthContext.Provider>
   );

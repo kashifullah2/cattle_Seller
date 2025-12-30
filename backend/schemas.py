@@ -17,6 +17,7 @@ class Token(BaseModel):
     token_type: str
     user_name: str
     user_id: int
+    profile_image: Optional[str] = None  # <--- NEW
 
 # --- Image Schemas ---
 class ImageBase(BaseModel):
@@ -33,8 +34,15 @@ class SellerOut(BaseModel):
     name: str
     phone: str
     is_verified: bool
+    profile_image: Optional[str] = None # <--- NEW
     class Config:
         orm_mode = True
+
+# --- Contact Schema ---
+class ContactMessage(BaseModel):
+    name: str
+    email: str
+    message: str
 
 # --- Animal Schemas ---
 class AnimalBase(BaseModel):
@@ -48,8 +56,8 @@ class AnimalBase(BaseModel):
 class AnimalOut(AnimalBase):
     id: int
     created_at: datetime
-    views: int = 0          # <--- New
-    is_sold: bool = False   # <--- New
+    views: int = 0
+    is_sold: bool = False
     seller: SellerOut
     images: List[ImageOut] = []
 

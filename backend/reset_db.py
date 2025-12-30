@@ -1,7 +1,6 @@
 from database import engine
 from models import Base
 
-# 1. Drop all existing tables (deletes old data & structure)
 print("Dropping old tables...")
 Base.metadata.drop_all(bind=engine)
 
