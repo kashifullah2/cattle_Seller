@@ -17,11 +17,8 @@ class User(Base):
     phone = Column(String(20), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
     is_verified = Column(Boolean, default=False)
-    
-    # --- NEW: Profile Image ---
     profile_image = Column(String(255), nullable=True)
-    # --------------------------
-
+    
     animals = relationship("Animal", back_populates="seller")
     favorited_animals = relationship("Animal", secondary=favorites, back_populates="favorited_by")
 
@@ -31,7 +28,12 @@ class Animal(Base):
     id = Column(Integer, primary_key=True, index=True)
     seller_id = Column(Integer, ForeignKey("users.id"))
     
+    # --- NEW: Name Field ---
+    name = Column(String(100), nullable=True) # e.g. "Bella", "Raju"
+    # -----------------------
+    
     animal_type = Column(String(50), index=True)
+    breed = Column(String(100)) # Ensure this exists if you added it previously
     price = Column(Float, index=True)
     weight = Column(Float)
     color = Column(String(50))

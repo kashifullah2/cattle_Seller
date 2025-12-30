@@ -355,3 +355,51 @@ def contact_developer(msg: schemas.ContactMessage):
     # For now, we log it to the console.
     print(f"📩 NEW CONTACT MSG from {msg.name} ({msg.email}): {msg.message}")
     return {"message": "Message sent successfully!"}
+
+
+# ... [Imports and other endpoints remain same] ...
+
+@app.post("/animals/", response_model=schemas.AnimalOut)
+def create_animal_listing(
+    animal_type: str = Form(...),
+    # Add name here (Optional)
+    name: Optional[str] = Form(None), 
+    breed: str = Form(...), # Ensure breed is handled
+    price: float = Form(...),
+    weight: float = Form(...),
+    color: str = Form(...),
+    city: str = Form(...),
+    description: str = Form(""),
+    files: List[UploadFile] = File(...),
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    new_animal = models.Animal(
+        seller_id=current_user.id,
+        name=name,       # <--- Save Name
+        animal_type=animal_type,
+        breed=breed,     # <--- Save Breed
+        price=price,
+        weight=weight,
+        color=color,
+        city=city,
+        description=description
+    )
+    db.add(new_animal)
+    db.commit()
+    db.refresh(new_animal)
+
+    for file in files:
+        file_location = f"static/uploads/{new_animal.id}_{file.filename}"
+        with open(file_location, "wb+") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        image_url = f"http://localhost:8000/{file_location}"
+        db_image = models.AnimalImage(animal_id=new_animal.id, image_url=image_url)
+        db.add(db_image)
+    
+    db.commit()
+    db.refresh(new_animal)
+    return new_animal
+
+# ... [Keep get_animals, delete, etc. EXACTLY AS BEFORE] ...

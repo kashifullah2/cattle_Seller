@@ -73,10 +73,14 @@ const AnimalDetails = () => {
   if (!animal) return <div className="text-center mt-20">Loading...</div>;
   const isOwner = user && user.id === animal.seller.id;
 
+  // Helper to display name safely
+  const displayName = animal.name ? `${animal.name} (${animal.animal_type})` : `${animal.breed} ${animal.animal_type}`;
+
   return (
     <div className="min-h-screen bg-gray-50">
-      
+      {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 py-4">
+        
         {/* Breadcrumbs */}
         <div className="flex items-center text-sm text-gray-500 mb-4">
             <Link to="/" className="hover:text-green-600">Home</Link>
@@ -101,7 +105,6 @@ const AnimalDetails = () => {
             {/* Image Section */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden relative">
                <div className="h-96 w-full bg-gray-200">
-                  {/* FIXED: Removed 'grayscale' class so image is always color */}
                   <img 
                     src={selectedImage || "https://via.placeholder.com/600"} 
                     className="w-full h-full object-cover" 
@@ -113,7 +116,7 @@ const AnimalDetails = () => {
                <div className="p-4 flex gap-2 overflow-x-auto">
                 {animal.images.map((img) => (
                     <button key={img.id} onClick={() => setSelectedImage(img.image_url)} className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === img.image_url ? 'border-green-600' : 'border-gray-100'}`}>
-                       <img src={img.image_url} className="w-full h-full object-cover" />
+                       <img src={img.image_url} className="w-full h-full object-cover" alt="Thumbnail" />
                     </button>
                 ))}
                </div>
@@ -125,11 +128,11 @@ const AnimalDetails = () => {
                 {/* Header Row: Title vs Buttons */}
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">{animal.animal_type}</h1>
+                        <h1 className="text-3xl font-bold text-gray-900">{displayName}</h1>
                         <p className="text-gray-500 flex items-center gap-1 mt-1"><MapPin size={16}/> {animal.city}</p>
                     </div>
 
-                    {/* Action Buttons Group (Aligned Right) */}
+                    {/* Action Buttons Group */}
                     <div className="flex gap-2">
                         <button onClick={handleShare} className="p-2 rounded-full border border-gray-200 text-gray-500 hover:text-green-600 hover:bg-green-50" title="Share">
                             <Share2 size={20} />

@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
-# --- Auth Schemas ---
 class UserCreate(BaseModel):
     name: str
     phone: str
@@ -17,9 +16,8 @@ class Token(BaseModel):
     token_type: str
     user_name: str
     user_id: int
-    profile_image: Optional[str] = None  # <--- NEW
+    profile_image: Optional[str] = None
 
-# --- Image Schemas ---
 class ImageBase(BaseModel):
     image_url: str
 
@@ -28,25 +26,25 @@ class ImageOut(ImageBase):
     class Config:
         orm_mode = True
 
-# --- Seller/User Schemas ---
 class SellerOut(BaseModel):
     id: int
     name: str
     phone: str
     is_verified: bool
-    profile_image: Optional[str] = None # <--- NEW
+    profile_image: Optional[str] = None
     class Config:
         orm_mode = True
 
-# --- Contact Schema ---
 class ContactMessage(BaseModel):
     name: str
     email: str
     message: str
 
-# --- Animal Schemas ---
+# --- Updated Animal Schemas ---
 class AnimalBase(BaseModel):
+    name: Optional[str] = None # <--- New
     animal_type: str
+    breed: Optional[str] = None # Ensure breed is here
     price: float
     weight: float
     color: str

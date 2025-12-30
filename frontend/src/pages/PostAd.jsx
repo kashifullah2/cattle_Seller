@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api'; // Removed Navbar
-import { UploadCloud, Calculator } from 'lucide-react';
+import api from '../api';
+import { UploadCloud, Calculator, Info, Tag, MapPin, DollarSign, FileText } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const PostAd = () => {
@@ -15,8 +15,17 @@ const PostAd = () => {
   }, [user, authLoading, navigate]);
 
   const [formData, setFormData] = useState({
-    animal_type: 'Goat', breed: '', age: '', price: '', weight: '', color: '', city: '', description: ''
+    name: '', 
+    animal_type: 'Goat', 
+    breed: '', 
+    age: '', 
+    price: '', 
+    weight: '', 
+    color: '', 
+    city: '', 
+    description: ''
   });
+  
   const [files, setFiles] = useState([]);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,8 +45,11 @@ const PostAd = () => {
         data.append('color', formData.color);
         const res = await api.post('/predict-price/', data);
         setFormData(prev => ({ ...prev, price: res.data.estimated_price }));
-    } catch (error) { alert("Could not predict price."); } 
-    finally { setPredicting(false); }
+    } catch (error) { 
+      alert("Could not predict price."); 
+    } finally { 
+      setPredicting(false); 
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -51,62 +63,149 @@ const PostAd = () => {
     try {
       await api.post('/animals/', data, { headers: { 'Content-Type': 'multipart/form-data' } });
       navigate('/');
-    } catch (error) { alert('Failed to upload ad.'); } 
-    finally { setLoading(false); }
+    } catch (error) { 
+      alert('Failed to upload ad.'); 
+    } finally { 
+      setLoading(false); 
+    }
   };
 
   if (authLoading) return null; 
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navbar Removed */}
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-lg p-6 sm:p-10">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Sell Your Animal</h1>
-            <p className="text-gray-500">Posting as <strong>{user?.name}</strong></p>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-3xl mx-auto px-4">
+        
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-extrabold text-gray-900">Post an Ad</h1>
+          <p className="text-gray-500 mt-2">Reach thousands of buyers in seconds.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          
+          {/* Section 1 */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <Tag size={20} className="text-green-600"/> Basic Information
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="col-span-1 md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select name="animal_type" onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500">
+                  <optgroup label="Livestock">
+                    <option value="Goat">Goat</option>
+                    <option value="Cow">Cow</option>
+                    <option value="Buffalo">Buffalo</option>
+                    <option value="Sheep">Sheep</option>
+                    <option value="Camel">Camel</option>
+                    <option value="Horse">Horse</option>
+                  </optgroup>
+                  <optgroup label="Pets">
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Rabbit">Rabbit</option>
+                  </optgroup>
+                  <optgroup label="Birds & Others">
+                    <option value="Bird">Bird</option>
+                    <option value="Hen">Hen</option>
+                    <option value="Duck">Duck</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Other">Other / Unknown</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Animal Name <span className="text-gray-400 font-normal">(Optional)</span></label>
+                <input type="text" name="name" placeholder="e.g. Bella, Raju" onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
+                <input type="text" name="breed" placeholder="e.g. Sahiwal" required onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
-               <h3 className="font-semibold text-gray-800">Animal Details</h3>
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                 <select name="animal_type" onChange={handleChange} className="w-full p-2 border rounded">
-                   <option value="Goat">Goat</option>
-                   <option value="Cow">Cow</option>
-                   <option value="Buffalo">Buffalo</option>
-                   <option value="Sheep">Sheep</option>
-                   <option value="Camel">Camel</option>
-                 </select>
-                 <input type="text" name="breed" placeholder="Breed" required onChange={handleChange} className="w-full p-2 border rounded" />
-                 <input type="text" name="age" placeholder="Age" onChange={handleChange} className="w-full p-2 border rounded" />
-                 <input type="number" name="weight" placeholder="Weight (kg)" required value={formData.weight} onChange={handleChange} className="w-full p-2 border rounded" />
-                 <input type="text" name="color" placeholder="Color" required value={formData.color} onChange={handleChange} className="w-full p-2 border rounded" />
-                 <input type="text" name="city" placeholder="City" required onChange={handleChange} className="w-full p-2 border rounded" />
-               </div>
-
-               <div className="flex gap-2 items-center">
-                   <input type="number" name="price" placeholder="Price (PKR)" required value={formData.price} onChange={handleChange} className="flex-grow p-2 border rounded border-green-200" />
-                   <button type="button" onClick={handlePredictPrice} className="bg-blue-600 text-white px-3 py-2 rounded flex items-center gap-1 text-sm hover:bg-blue-700" disabled={predicting}>
-                    <Calculator size={16} /> {predicting ? "..." : "Suggest Price"}
-                   </button>
-               </div>
-               <textarea name="description" placeholder="Description..." rows="3" onChange={handleChange} className="w-full p-2 border rounded"></textarea>
+          {/* Section 2 */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <Info size={20} className="text-green-600"/> Physical Details
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                <input type="text" name="age" placeholder="e.g. 2 years" onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                <input type="number" name="weight" placeholder="e.g. 250" required value={formData.weight} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                <input type="text" name="color" placeholder="e.g. Black" required value={formData.color} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+              </div>
             </div>
+          </div>
 
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition">
-              <input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden" id="file-upload" required />
-              <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center">
-                <UploadCloud className="h-10 w-10 text-gray-400 mb-2" />
-                <span className="text-sm text-gray-600">Click to upload photos</span>
-              </label>
+          {/* Section 3 */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <DollarSign size={20} className="text-green-600"/> Price & Location
+            </h3>
+
+            <div className="space-y-6">
+              <div>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">Price (PKR)</label>
+                 <div className="flex gap-2">
+                    <input type="number" name="price" placeholder="Total Price" required value={formData.price} onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500" />
+                    <button type="button" onClick={handlePredictPrice} className="bg-blue-50 text-blue-600 border border-blue-200 px-4 rounded-lg font-medium text-sm flex items-center gap-2 hover:bg-blue-100 whitespace-nowrap" disabled={predicting}>
+                      <Calculator size={18} /> {predicting ? "..." : "Get Estimate"}
+                    </button>
+                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">City / Location</label>
+                <div className="relative">
+                  <MapPin className="absolute top-3.5 left-3 text-gray-400" size={18} />
+                  <input type="text" name="city" placeholder="e.g. Lahore, Punjab" required onChange={handleChange} className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-green-500" />
+                </div>
+              </div>
             </div>
+          </div>
 
-            <button type="submit" disabled={loading} className="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition shadow-md disabled:bg-gray-400">
-              {loading ? 'Posting...' : 'Post Ad Now'}
-            </button>
-          </form>
-        </div>
+          {/* Section 4 */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <FileText size={20} className="text-green-600"/> Description & Media
+            </h3>
+            
+            <div className="space-y-6">
+              <textarea name="description" placeholder="Describe the animal's health, diet, history..." rows="4" onChange={handleChange} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500"></textarea>
+
+              <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition cursor-pointer relative">
+                <input type="file" multiple accept="image/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required />
+                <div className="flex flex-col items-center">
+                  <div className="bg-green-100 p-3 rounded-full mb-3">
+                    <UploadCloud className="text-green-600" size={24} />
+                  </div>
+                  <span className="text-gray-700 font-medium">Click to upload images</span>
+                  <span className="text-sm text-gray-400 mt-1">
+                    {files.length > 0 ? `${files.length} images selected` : "JPG, PNG, WEBP (Max 5)"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" disabled={loading} className="w-full bg-green-700 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-800 transition shadow-lg disabled:bg-gray-400">
+            {loading ? 'Posting Ad...' : 'Publish Ad'}
+          </button>
+
+        </form>
       </div>
     </div>
   );
