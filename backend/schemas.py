@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
-# --- Auth Schemas ---
+# --- Auth & User ---
 class UserCreate(BaseModel):
     name: str
     email: str
@@ -22,7 +22,53 @@ class Token(BaseModel):
     user_id: int
     profile_image: Optional[str] = None
 
-# --- Other Schemas ---
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
+
+class PasswordResetRequest(BaseModel):
+    email: str
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
+
+# --- Reviews & Messages ---
+class ReviewCreate(BaseModel):
+    reviewee_id: int
+    rating: int
+    comment: str
+
+class ReviewOut(BaseModel):
+    id: int
+    reviewer_name: str
+    rating: int
+    comment: Optional[str]
+    created_at: datetime
+    class Config:
+        orm_mode = True
+
+class MessageCreate(BaseModel):
+    receiver_id: int
+    content: str
+
+class MessageOut(BaseModel):
+    id: int
+    sender_id: int
+    receiver_id: int
+    content: str
+    timestamp: datetime
+    is_read: bool = False
+    class Config:
+        orm_mode = True
+
+class ChatContact(BaseModel):
+    user_id: int
+    name: str
+    image: Optional[str]
+    last_message: str
+
+# --- Animals ---
 class ImageBase(BaseModel):
     image_url: str
 
@@ -34,17 +80,14 @@ class ImageOut(ImageBase):
 class SellerOut(BaseModel):
     id: int
     name: str
-    email: Optional[str] = None # <--- NEW: Added Email here
+    email: Optional[str] = None
     phone: str
     is_verified: bool
     profile_image: Optional[str] = None
+    average_rating: float = 0.0
+    review_count: int = 0
     class Config:
         orm_mode = True
-
-class ContactMessage(BaseModel):
-    name: str
-    email: str
-    message: str
 
 class AnimalBase(BaseModel):
     name: Optional[str] = None

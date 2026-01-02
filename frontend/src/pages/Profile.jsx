@@ -1,220 +1,224 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Camera, Save, User, Phone, ShieldCheck, LayoutDashboard, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // <--- 1. Import this
 import api from '../api';
+import { Camera, User, Lock, LogOut, LayoutDashboard, Settings } from 'lucide-react';
 
 const Profile = () => {
-  const { user, updateUserImage, updateUser, logout } = useContext(AuthContext);
+  const { user, logout, updateUser } = useContext(AuthContext);
+  const navigate = useNavigate(); // <--- 2. Initialize Hook
+  
+  // States for Image Upload
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [loadingImg, setLoadingImg] = useState(false);
-  const [loadingInfo, setLoadingInfo] = useState(false);
-  
-  // Edit Form State
+  const [uploading, setUploading] = useState(false);
+
+  // States for Info Update
   const [formData, setFormData] = useState({ name: '', phone: '' });
+
+  // States for Password Change
+  const [passData, setPassData] = useState({ old_password: '', new_password: '' });
+  const [passMsg, setPassMsg] = useState('');
+  const [passLoading, setPassLoading] = useState(false);
+
+  // Stats
   const [stats, setStats] = useState({ ads: 0, views: 0 });
 
   useEffect(() => {
     if (user) {
-      // Initialize form with current user data
-      // Note: We might need to fetch phone from API if not in context, 
-      // but for now let's assume user context has name. 
-      // We will fetch fresh data.
-      fetchUserData();
-      fetchUserStats();
+        setFormData({ name: user.name, phone: user.phone || '' });
+        setPreview(user.image);
+        fetchStats();
     }
   }, [user]);
 
-  const fetchUserData = async () => {
-    // We reuse the animals endpoint to get seller info implicitly or add a specific GET /users/me endpoint later
-    // For now, we pre-fill what we have.
-    setFormData({ name: user.name, phone: '' }); 
-    // Ideally, backend should send phone in /login response to store in context.
-    // Since we didn't store phone in context, user has to re-enter it or we fetch it.
+  const fetchStats = async () => {
+      try {
+        const res = await api.get('/users/me/animals');
+        const ads = res.data;
+        const views = ads.reduce((acc, curr) => acc + (curr.views || 0), 0);
+        setStats({ ads: ads.length, views });
+      } catch (e) { console.error(e); }
   };
 
-  const fetchUserStats = async () => {
-    try {
-      const res = await api.get('/users/me/animals');
-      const adsCount = res.data.length;
-      const viewsCount = res.data.reduce((acc, curr) => acc + (curr.views || 0), 0);
-      setStats({ ads: adsCount, views: viewsCount });
-    } catch (e) { console.error(e); }
+  // --- 3. THE LOGOUT FIX ---
+  const handleLogout = () => {
+      logout(); // Clear data
+      navigate('/login'); // Force redirect
   };
 
+  // 1. Handle Image Upload
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
   };
 
-  const handleImageUpload = async () => {
-    if (!file) return;
-    setLoadingImg(true);
-    const data = new FormData();
-    data.append('file', file);
-    try {
-      const res = await api.put('/users/me/image', data);
-      updateUserImage(res.data.image_url);
-      setFile(null);
-      alert("Profile picture updated!");
-    } catch (err) { alert("Failed to upload image."); }
-    finally { setLoadingImg(false); }
+  const saveImage = async () => {
+      if(!file) return;
+      setUploading(true);
+      const data = new FormData();
+      data.append('file', file);
+      try {
+          const res = await api.put('/users/me/image', data);
+          updateUser({ ...user, image: res.data.image_url });
+          setFile(null);
+          alert("Profile photo updated!");
+          window.location.reload(); // Fixes white screen issue
+      } catch(err) { 
+          alert("Failed to upload"); 
+      }
+      finally { setUploading(false); }
   };
 
-  const handleInfoUpdate = async (e) => {
-    e.preventDefault();
-    setLoadingInfo(true);
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('phone', formData.phone);
-    
-    try {
-      await api.put('/users/me', data);
-      updateUser(formData.name, formData.phone);
-      alert("Profile details updated successfully!");
-    } catch (error) {
-      alert("Failed to update details. Phone number might be taken.");
-    } finally {
-      setLoadingInfo(false);
-    }
+  // 2. Handle Info Update
+  const saveInfo = async (e) => {
+      e.preventDefault();
+      alert("Feature coming soon: Update Name/Phone");
   };
 
-  if (!user) return <div className="text-center py-20">Please Login first.</div>;
+  // 3. Handle Password Change
+  const handlePassChange = async (e) => {
+      e.preventDefault();
+      setPassLoading(true);
+      setPassMsg('');
+      try {
+          await api.post('/users/change-password', passData);
+          setPassMsg("Success: Password updated successfully!");
+          setPassData({ old_password: '', new_password: '' });
+      } catch (err) {
+          setPassMsg("Error: Incorrect old password or server error.");
+      } finally {
+          setPassLoading(false);
+      }
+  };
+
+  if (!user) return <div className="h-screen flex items-center justify-center">Loading Profile...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
+    <div className="min-h-screen bg-[#f8fafc] pb-20">
       
       {/* Header Background */}
-      <div className="bg-green-700 h-48 w-full relative">
-         <div className="absolute inset-0 bg-black/10"></div>
+      <div className="bg-gradient-to-r from-green-800 to-emerald-700 h-60 w-full relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative -mt-20">
-        
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative -mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* LEFT COLUMN: Profile Card */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100">
-              
-              {/* Image Upload */}
-              <div className="relative w-32 h-32 mx-auto mb-4 group">
-                <img 
-                  src={preview || user.image || "https://via.placeholder.com/150"} 
-                  alt="Profile" 
-                  className="w-full h-full rounded-full object-cover border-4 border-white shadow-md"
-                />
-                <label htmlFor="p-upload" className="absolute bottom-0 right-0 bg-green-600 text-white p-2.5 rounded-full cursor-pointer hover:bg-green-700 shadow-lg transition transform hover:scale-105">
-                  <Camera size={18} />
-                </label>
-                <input type="file" id="p-upload" className="hidden" accept="image/*" onChange={handleFileChange} />
-              </div>
-
-              {file && (
-                <button 
-                  onClick={handleImageUpload} 
-                  disabled={loadingImg}
-                  className="mb-4 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold"
-                >
-                  {loadingImg ? "Saving..." : "Click to Save New Pic"}
-                </button>
-              )}
-
-              <h2 className="text-2xl font-bold text-gray-900">{user.name}</h2>
-              <p className="text-gray-500 text-sm mb-6">Member since 2024</p>
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-2 border-t pt-4 mb-6">
-                 <div className="text-center">
-                    <span className="block font-bold text-xl text-gray-800">{stats.ads}</span>
-                    <span className="text-xs text-gray-500 uppercase tracking-wide">Active Ads</span>
-                 </div>
-                 <div className="text-center border-l">
-                    <span className="block font-bold text-xl text-gray-800">{stats.views}</span>
-                    <span className="text-xs text-gray-500 uppercase tracking-wide">Total Views</span>
-                 </div>
-              </div>
-
-              <button onClick={logout} className="w-full flex items-center justify-center gap-2 text-red-600 font-medium py-2 hover:bg-red-50 rounded-lg transition">
-                 <LogOut size={18} /> Sign Out
-              </button>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Edit Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-               <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                  <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                    <User size={20} className="text-green-600"/> Edit Personal Details
-                  </h3>
-                  <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-md font-bold flex items-center gap-1">
-                    <ShieldCheck size={12}/> Verified Account
-                  </span>
-               </div>
-               
-               <div className="p-6 sm:p-8">
-                 <form onSubmit={handleInfoUpdate} className="space-y-6">
-                    
-                    <div className="grid grid-cols-1 gap-6">
-                       <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                          <div className="relative">
-                            <User className="absolute top-3.5 left-3 text-gray-400" size={18} />
-                            <input 
-                              type="text" 
-                              value={formData.name}
-                              onChange={(e) => setFormData({...formData, name: e.target.value})}
-                              className="w-full pl-10 p-3 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 transition"
-                              placeholder="Your Name"
-                            />
-                          </div>
-                       </div>
-
-                       <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                          <div className="relative">
-                            <Phone className="absolute top-3.5 left-3 text-gray-400" size={18} />
-                            <input 
-                              type="text" 
-                              value={formData.phone}
-                              onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                              className="w-full pl-10 p-3 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 transition"
-                              placeholder="Update Phone Number"
-                            />
-                          </div>
-                          <p className="text-xs text-gray-400 mt-2">Note: Changing your phone number will require verification next time.</p>
-                       </div>
-                    </div>
-
-                    <div className="pt-4 flex justify-end">
-                       <button 
-                         type="submit" 
-                         disabled={loadingInfo}
-                         className="bg-green-700 text-white px-6 py-3 rounded-xl font-bold shadow-md hover:bg-green-800 transition flex items-center gap-2 disabled:bg-gray-400"
-                       >
-                         {loadingInfo ? 'Updating...' : <><Save size={18} /> Save Changes</>}
-                       </button>
-                    </div>
-
-                 </form>
-               </div>
-            </div>
-
-            {/* Additional Options Card (Placeholder for future) */}
-            <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
-                <div>
-                   <h4 className="font-bold text-gray-800">Manage Listings</h4>
-                   <p className="text-sm text-gray-500">View, edit, or delete your active animal ads.</p>
+          {/* --- LEFT COLUMN: Profile Card & Stats --- */}
+          <div className="lg:col-span-1 space-y-6">
+             
+             {/* Profile Card */}
+             <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 p-6 text-center border border-gray-100">
+                <div className="relative w-32 h-32 mx-auto mb-4">
+                    <img src={preview || "https://via.placeholder.com/150"} className="w-full h-full rounded-full object-cover border-4 border-white shadow-md" alt="User" />
+                    <label className="absolute bottom-1 right-1 bg-gray-900 text-white p-2 rounded-full cursor-pointer hover:bg-black transition shadow-sm">
+                        <Camera size={16} />
+                        <input type="file" className="hidden" onChange={handleFileChange} />
+                    </label>
                 </div>
-                <a href="/dashboard" className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-gray-800">
-                   <LayoutDashboard size={16}/> Go to Dashboard
-                </a>
+                
+                {file && (
+                    <button onClick={saveImage} disabled={uploading} className="text-xs bg-green-600 text-white px-3 py-1 rounded-full mb-4 hover:bg-green-700 transition">
+                        {uploading ? "Saving..." : "Save Photo"}
+                    </button>
+                )}
+
+                <h2 className="text-2xl font-extrabold text-gray-900">{user.name}</h2>
+                <p className="text-gray-500 text-sm mb-6">{user.email}</p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                        <p className="text-2xl font-bold text-gray-900">{stats.ads}</p>
+                        <p className="text-xs text-gray-500 uppercase font-bold">Active Ads</p>
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                        <p className="text-2xl font-bold text-gray-900">{stats.views}</p>
+                        <p className="text-xs text-gray-500 uppercase font-bold">Total Views</p>
+                    </div>
+                </div>
+
+                {/* LOGOUT BUTTON - Updated to use handleLogout */}
+                <button 
+                    onClick={handleLogout} 
+                    className="w-full flex items-center justify-center gap-2 text-red-600 font-bold py-3 hover:bg-red-50 rounded-xl transition border border-transparent hover:border-red-100"
+                >
+                    <LogOut size={18} /> Sign Out
+                </button>
+             </div>
+          </div>
+
+          {/* --- RIGHT COLUMN: Edit Forms --- */}
+          <div className="lg:col-span-2 space-y-8">
+            
+            {/* Edit Personal Info */}
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+               <div className="bg-gray-50/50 px-8 py-5 border-b border-gray-100 flex items-center gap-3">
+                  <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><User size={20}/></div>
+                  <h3 className="font-bold text-gray-800 text-lg">Personal Details</h3>
+               </div>
+               <div className="p-8">
+                  <form onSubmit={saveInfo} className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
+                            <input type="text" className="modern-input" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone Number</label>
+                            <input type="text" className="modern-input" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} disabled />
+                            <p className="text-[10px] text-gray-400 mt-1">Contact admin to change phone number</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <button disabled className="bg-gray-200 text-gray-400 px-6 py-3 rounded-xl font-bold cursor-not-allowed">
+                             Save Changes
+                        </button>
+                      </div>
+                  </form>
+               </div>
+            </div>
+
+            {/* Change Password */}
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+               <div className="bg-gray-50/50 px-8 py-5 border-b border-gray-100 flex items-center gap-3">
+                  <div className="bg-green-100 p-2 rounded-lg text-green-600"><Lock size={20}/></div>
+                  <h3 className="font-bold text-gray-800 text-lg">Security</h3>
+               </div>
+               <div className="p-8">
+                  <h4 className="font-bold text-gray-900 mb-1">Change Password</h4>
+                  <p className="text-gray-500 text-sm mb-6">Ensure your account is using a long, random password to stay secure.</p>
+                  
+                  {passMsg && (
+                      <div className={`mb-6 p-4 rounded-xl text-sm font-bold flex items-center gap-2 ${passMsg.includes("Success") ? "bg-green-50 text-green-700 border border-green-100" : "bg-red-50 text-red-600 border border-red-100"}`}>
+                          {passMsg}
+                      </div>
+                  )}
+
+                  <form onSubmit={handlePassChange} className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Current Password</label>
+                            <input type="password" required className="modern-input" value={passData.old_password} onChange={e => setPassData({...passData, old_password: e.target.value})} />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">New Password</label>
+                            <input type="password" required className="modern-input" value={passData.new_password} onChange={e => setPassData({...passData, new_password: e.target.value})} />
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                          <button disabled={passLoading} className="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-black transition shadow-lg shadow-gray-900/10">
+                              {passLoading ? "Updating..." : "Update Password"}
+                          </button>
+                      </div>
+                  </form>
+               </div>
             </div>
 
           </div>
-
         </div>
       </div>
     </div>

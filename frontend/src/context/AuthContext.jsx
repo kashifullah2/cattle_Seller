@@ -8,55 +8,54 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Load data from storage
+    // 1. Check for token and user on startup
     const token = localStorage.getItem('token');
-    const userName = localStorage.getItem('userName');
-    const userId = localStorage.getItem('userId');
-    const userImg = localStorage.getItem('userImg');
-    
-    // 2. Validate Image URL (prevent "null" string issues)
-    const validImg = (userImg && userImg !== "null" && userImg !== "undefined") ? userImg : null;
+    const storedUser = localStorage.getItem('user');
 
-    if (token && userName && userId) {
-      setUser({ name: userName, token, id: parseInt(userId), image: validImg });
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token && storedUser) {
+      try {
+        // Safe Parse: Prevents crash if data is "[object Object]"
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (e) {
+        console.error("Storage corrupted, logging out");
+        localStorage.clear();
+      }
     }
     setLoading(false);
   }, []);
 
-  const login = (token, userName, userId, userImg) => {
+  const login = (token, userData) => {
     localStorage.setItem('token', token);
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('userId', userId);
     
-    // Ensure we save a string or empty string, not null
-    const imageToSave = userImg || "";
-    localStorage.setItem('userImg', imageToSave);
-
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setUser({ name: userName, token, id: userId, image: imageToSave || null });
-  };
-
-  const updateUserImage = (newUrl) => {
-    localStorage.setItem('userImg', newUrl);
-    setUser((prev) => ({ ...prev, image: newUrl }));
-  };
-
-  const updateUser = (newName, newPhone) => {
-    localStorage.setItem('userName', newName);
-    setUser((prev) => ({ ...prev, name: newName, phone: newPhone }));
+    // 2. Format user object correctly
+    const safeUser = {
+        id: userData.user_id,
+        name: userData.user_name,
+        email: userData.sub || userData.email, // Handle different formats
+        image: userData.profile_image
+    };
+    
+    // IMPORTANT: JSON.stringify prevents "[object Object]"
+    localStorage.setItem('user', JSON.stringify(safeUser));
+    setUser(safeUser);
   };
 
   const logout = () => {
-    localStorage.clear();
-    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
-    window.location.href = '/login';
+  };
+
+  const updateUser = (newUserData) => {
+    setUser(newUserData);
+    // IMPORTANT: JSON.stringify here too!
+    localStorage.setItem('user', JSON.stringify(newUserData));
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, updateUserImage, updateUser }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, updateUser, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
