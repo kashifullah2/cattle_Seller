@@ -109,3 +109,20 @@ class AnimalOut(AnimalBase):
 
     class Config:
         orm_mode = True
+
+
+class UserUpdate(BaseModel):
+    name: str
+    gender: Optional[str] = None
+    address: Optional[str] = None
+
+class UserProfile(BaseModel):
+    id: int
+    name: str
+    email: str
+    phone: str
+    gender: Optional[str] = None
+    address: Optional[str] = None
+    profile_image: Optional[str] = None
+    class Config:
+        orm_mode = True

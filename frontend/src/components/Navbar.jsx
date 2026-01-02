@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Plus, Bell, LayoutDashboard, LogOut, User } from 'lucide-react';
+import { Plus, Bell, LogOut, User, Calculator } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import api from '../api';
 
@@ -11,11 +11,9 @@ const Navbar = () => {
   const [unreadCount, setUnreadCount] = useState(0);
   const ws = useRef(null);
 
-  // Fetch unread messages count
   useEffect(() => {
     if (user) {
       fetchUnreadCount();
-      // Connect WebSocket for real-time notifications
       ws.current = new WebSocket(`ws://localhost:8000/ws/${user.id}`);
       ws.current.onmessage = (event) => {
         if(event.data.includes("NEW_MESSAGE")) {
@@ -38,9 +36,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-      // 1. Clear Context & Storage
-      logout(); 
-      // 2. Force Navigate to Login Page immediately
+      logout();
       navigate('/login', { replace: true });
   };
 
@@ -63,19 +59,21 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4">
             
+            {/* Price AI Link */}
+            <Link to="/PricePredictor" className="hidden sm:flex text-gray-600 hover:text-green-600 font-semibold items-center gap-1 mr-2">
+                <Calculator size={18} /> Price AI
+            </Link>
+
             <Link to="/post-ad" className="hidden sm:flex bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-xl font-semibold transition shadow-lg items-center gap-2">
               <Plus size={18} /> Sell
             </Link>
 
             {user ? (
               <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-                
-                {/* User Name Display */}
                 <span className="hidden md:block text-sm font-bold text-gray-700">
                     Hi, {user.name || "User"}
                 </span>
 
-                {/* Notifications */}
                 <Link to="/chat" className="relative p-2 rounded-full text-gray-500 hover:bg-green-50 hover:text-green-600 transition">
                    <Bell size={24} />
                    {unreadCount > 0 && (
@@ -85,26 +83,19 @@ const Navbar = () => {
                    )}
                 </Link>
 
-                {/* Dashboard */}
                 <Link to="/profile" className={`p-2 rounded-full transition ${isActive('/profile')}`} title="Profile">
                    <User size={20} />
                 </Link>
 
-                {/* Sign Out Button */}
-                <button 
-                    onClick={handleLogout} 
-                    className="p-2 rounded-full text-red-500 hover:bg-red-50 transition"
-                    title="Sign Out"
-                >
+                <button onClick={handleLogout} className="p-2 rounded-full text-red-500 hover:bg-red-50 transition" title="Sign Out">
                     <LogOut size={20} />
                 </button>
 
-                {/* Profile Image Link */}
                 <Link to="/profile" className="flex items-center gap-3 group ml-2">
                   <img src={user.image || "https://via.placeholder.com/40"} alt="User" className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm group-hover:border-green-500 transition" />
                 </Link>
               </div>
-            ) : ( 
+            ) : (
               <div className="flex items-center gap-3">
                 <Link to="/login" className="text-gray-700 font-semibold hover:text-green-600 px-3 py-2">Login</Link>
                 <Link to="/signup" className="bg-green-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition">Sign Up</Link>

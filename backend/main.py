@@ -402,3 +402,42 @@ def get_user_reviews(user_id: int, db: Session = Depends(database.get_db)):
 def get_price_prediction(weight: float = Form(...), age: str = Form(...), breed: str = Form(...), color: str = Form(...)):
     estimated_price = predict_animal_price(weight, age, breed, color)
     return {"estimated_price": estimated_price}
+
+
+
+@app.get("/users/me", response_model=schemas.UserProfile)
+def read_users_me(current_user: models.User = Depends(get_current_user)):
+    return current_user
+
+# 2. Update User Details (Name, Gender, Address)
+@app.put("/users/me", response_model=schemas.UserProfile)
+def update_user_details(
+    data: schemas.UserUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    current_user.name = data.name
+    current_user.gender = data.gender
+    current_user.address = data.address
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
+
+@app.get("/users/me", response_model=schemas.UserProfile)
+def read_users_me(current_user: models.User = Depends(get_current_user)):
+    return current_user
+
+# 2. Update User Details (Name, Gender, Address)
+@app.put("/users/me", response_model=schemas.UserProfile)
+def update_user_details(
+    data: schemas.UserUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    current_user.name = data.name
+    current_user.gender = data.gender
+    current_user.address = data.address
+    db.commit()
+    db.refresh(current_user)
+    return current_user
