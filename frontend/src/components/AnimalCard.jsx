@@ -115,7 +115,7 @@ const AnimalCard = ({ animal }) => {
                     <Phone size={16} fill="currentColor" />
                   </a>
                   {animal.seller.email && (
-                    <a href={`mailto:${animal.seller.email}`} className="p-2 bg-white rounded-full text-green-600 shadow-sm hover:scale-110 transition-transform">
+                    <a href={`/chat`} className="p-2 bg-white rounded-full text-green-600 shadow-sm hover:scale-110 transition-transform">
                        <MessageCircle size={16} />
                     </a>
                   )}

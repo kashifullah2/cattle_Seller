@@ -56,6 +56,9 @@ const Filters = ({ onFilterChange }) => {
                 <optgroup label="Pets">
                     <option value="Dog">Dog</option><option value="Cat">Cat</option><option value="Rabbit">Rabbit</option>
                 </optgroup>
+                <optgroup label="Others">
+                    <option value="Fish">Fish</option><option value="Other">Other/Unknown</option>
+                </optgroup>
              </select>
              <div className="absolute right-4 top-3.5 pointer-events-none">
                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>

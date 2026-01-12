@@ -16,6 +16,7 @@ import Profile from './pages/Profile';
 import Chat from './pages/Chat';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import MyDashboard from './pages/MyDashboard'
 const App = () => {
   return (
     <AuthProvider>
@@ -33,7 +34,8 @@ const App = () => {
               <Route path="/chat" element={<Chat />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/PricePredictor" element={<PricePredictor />} /> {/* <--- Add this Route */}
+              <Route path="/PricePredictor" element={<PricePredictor />} />
+              <Route path="/MyDashboard" element={<MyDashboard />} />
             </Routes>
           </main>
           <Footer />
