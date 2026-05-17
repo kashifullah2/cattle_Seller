@@ -40,11 +40,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-green-500" />
-                <span>+92 300 1234567</span>
+                <span>+92 31234556788</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-green-500" />
-                <span>kashifullah919@gmail.com</span>
+                <span>animalmarket@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -53,9 +53,9 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Follow Us</h3>
             <div className="flex gap-4 mb-6">
-              <a href="https://www.linkedin.com/in/kashifullah1/" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Linkedin size={20} /></a>
-              <a href="https://github.com/kashifullah2" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Github size={20} /></a>
-              <a href="https://www.instagram.com/mkashifullah/" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Instagram size={20} /></a>
+              <a href="" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Linkedin size={20} /></a>
+              <a href="" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Github size={20} /></a>
+              <a href="" className="bg-gray-800 p-2 rounded-full hover:bg-green-600 hover:text-white transition"><Instagram size={20} /></a>
             </div>
             <p className="text-xs text-gray-500">
               &copy; {new Date().getFullYear()} AnimalMarket. All rights reserved. <br />Developed by Kashif Ullah
