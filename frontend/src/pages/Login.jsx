@@ -3,7 +3,10 @@ import { AuthContext } from '../context/AuthContext';
 import api from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
-
+import farmCow from '../assets/farm_cow.png';
+import farmSheep from '../assets/farm_sheep.png';
+import farmHorse from '../assets/farm_horse.png';
+import farmTractor from '../assets/farm_tractor.png';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,15 +37,32 @@ const Login = () => {
       
       {/* LEFT SIDE: Image & Branding */}
       <div className="hidden lg:flex w-1/2 bg-green-900 relative items-center justify-center overflow-hidden">
-         <div className="absolute inset-0 bg-black/20 z-10"></div>
-         <img 
-            src="https://images.unsplash.com/photo-1516467508483-a72120608ae7?q=80&w=2070&auto=format&fit=crop" 
-            className="absolute inset-0 w-full h-full object-cover"
-            alt="Farm Login"
-         />
+         <div className="absolute inset-0 z-0 grid grid-cols-2 grid-rows-2 gap-1">
+            <img 
+               src={farmCow} 
+               className="w-full h-full object-cover opacity-60"
+               alt="Farm Image 1"
+            />
+            <img 
+               src={farmSheep} 
+               className="w-full h-full object-cover opacity-60"
+               alt="Farm Image 2"
+            />
+            <img 
+               src={farmHorse} 
+               className="w-full h-full object-cover opacity-60"
+               alt="Farm Image 3"
+            />
+            <img 
+               src={farmTractor} 
+               className="w-full h-full object-cover opacity-60"
+               alt="Farm Image 4"
+            />
+         </div>
+         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 z-10"></div>
          <div className="relative z-20 p-12 text-white max-w-lg">
-            <h2 className="text-5xl font-extrabold mb-6 leading-tight">Welcome Back to <span className="text-green-400">AnimalMarket</span></h2>
-            <p className="text-lg text-green-100/90 leading-relaxed">
+            <h2 className="text-5xl font-extrabold mb-6 leading-tight drop-shadow-lg">Welcome Back to <span className="text-green-400">AnimalMarket</span></h2>
+            <p className="text-lg text-green-50/90 leading-relaxed drop-shadow-md">
                Connect with thousands of buyers and sellers. Manage your listings, chat instantly, and grow your business today.
             </p>
          </div>

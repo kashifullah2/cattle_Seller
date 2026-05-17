@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cattle Seller - Easy Animal Marketplace | For Everyone</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #10b981 0%, #059669 100%); min-height: 100vh; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    header { background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 2rem; font-weight: bold; color: white; }
+    .hero { text-align: center; padding: 6rem 0 4rem; color: white; }
+    .hero h1 { font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(45deg, #fff, #f0f9ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.5rem; max-width: 700px; margin: 0 auto 3rem; opacity: 0.95; }
+    .hero-img { width: 100%; max-width: 800px; height: 400px; object-fit: cover; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+    .section { background: rgba(255,255,255,0.97); margin: 4rem 0; padding: 4rem 3rem; border-radius: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+    .section h2 { font-size: 3rem; margin-bottom: 2rem; color: #064e3b; text-align: center; position: relative; }
+    .section h2::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 80px; height: 5px; background: linear-gradient(90deg, #10b981, #059669); border-radius: 3px; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; }
+    .benefit-card { text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: 25px; transition: all 0.4s; border: 2px solid transparent; }
+    .benefit-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(16,185,129,0.3); border-color: #10b981; }
+    .benefit-icon { font-size: 4rem; margin-bottom: 1.5rem; display: block; }
+    .demo-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .demo-card { position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .demo-img { width: 100%; height: 250px; object-fit: cover; transition: transform 0.5s; }
+    .demo-img:hover { transform: scale(1.1); }
+    .demo-label { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; background: rgba(0,0,0,0.8); color: white; padding: 1rem; border-radius: 15px; font-weight: bold; }
+    .journey-steps { display: flex; flex-direction: column; gap: 2rem; }
+    .step { display: flex; gap: 2rem; align-items: center; padding: 2.5rem; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+    .step-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; flex-shrink: 0; }
+    .cta { text-align: center; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 4rem 3rem; border-radius: 30px; margin: 4rem 0; }
+    .cta h2 { font-size: 3rem; margin-bottom: 1.5rem; }
+    .cta button { background: white; color: #064e3b; padding: 1.2rem 3rem; font-size: 1.3rem; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+    .cta button:hover { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+    @media (max-width: 768px) { .hero h1 { font-size: 2.8rem; } .section { padding: 3rem 2rem; margin: 3rem 0; } .demo-gallery { grid-template-columns: 1fr; } .step { flex-direction: column; text-align: center; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">🐄 Cattle Seller</div>
+        <div></div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Buy &amp; Sell Animals <br> <span style="color: #ecfdf5;">Easily Online</span></h1>
+      <p style="font-size: 1.6rem;">Connect farmers and buyers in minutes. Post ads, chat instantly, get smart price suggestions – no hassle!</p>
+      <img src="backend/static/uploads/1_GettyImages-1395624811-1408x900.avif" alt="Beautiful Livestock" class="hero-img">
+    </div>
+  </section>
+
+  <div class="container">
+
+    <section class="section">
+      <h2>👨‍🌾 Perfect for Farmers &amp; Buyers</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <span class="benefit-icon">💰</span>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Fair Prices Instantly</h3>
+          <p>Our smart tool suggests the right price for your animal based on weight, breed, and color. No more guesswork!</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">💬</span>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Chat with Buyers Right Away</h3>
+          <p>Talk directly with interested buyers. See messages instantly and close deals faster.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">⭐</span>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Trust with Ratings</h3>
+          <p>Check seller ratings and reviews before buying. Leave feedback after every deal.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">📱</span>
+          <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Works on Phone</h3>
+          <p>Browse cows, goats, camels from anywhere. Easy filters by city and animal type.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>📱 See How Easy It Is</h2>
+      <div class="demo-gallery">
+        <div class="demo-card">
+          <img src="backend/static/uploads/1_cow-removable-blurry-white-background-600nw-2548678931.webp" alt="Home Page" class="demo-img">
+          <div class="demo-label">🏠 Browse Animals by Category</div>
+        </div>
+        <div class="demo-card">
+          <img src="backend/static/uploads/user_2_1767313061_iStock-177426993-1024x614.jpg" alt="Post Ad" class="demo-img">
+          <div class="demo-label">📤 Post Your Ad in 2 Minutes</div>
+        </div>
+        <div class="demo-card">
+          <img src="backend/static/uploads/2_lovely-white-baby-goat-running-on-grass-picture-id1281182694-1024x535.jpg" alt="Details" class="demo-img">
+          <div class="demo-label">👀 View Full Details</div>
+        </div>
+        <div class="demo-card">
+          <img src="backend/static/uploads/user_2_1767957316_Arabian-dromedary-camel.webp" alt="Chat" class="demo-img">
+          <div class="demo-label">💬 Instant Chat with Seller</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>🚶‍♂️ How It Works (3 Simple Steps)</h2>
+      <div class="journey-steps">
+        <div class="step">
+          <span class="step-icon">1️⃣</span>
+          <div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Signup &amp; Post Ad</h3>
+            <p>Add photos, weight, location. Get smart price suggestion automatically!</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-icon">2️⃣</span>
+          <div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Buyers Find You</h3>
+            <p>They search by city/animal type, view your ad, and message instantly.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-icon">3️⃣</span>
+          <div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Deal Done!</h3>
+            <p>Chat, negotiate, meetup. Leave rating for trust.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>⚡ Ready to Try? It's Super Easy!</h2>
+      <p style="text-align: center; font-size: 1.3rem; color: #4b5563; margin-bottom: 3rem;">
+        Just 2 commands and it's live on your computer:
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+        <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 2.5rem; border-radius: 20px; text-align: center;">
+          <h4 style="font-size: 1.5rem; color: #1e293b; margin-bottom: 1rem;">Server (Animals + Chat)</h4>
+          <div style="background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 15px; font-family: monospace; font-size: 1rem; margin-bottom: 1rem;">
+            cd backend<br>uv sync<br>uvicorn main:app --reload
+          </div>
+          <p style="color: #64748b;">Runs at http://localhost:8000</p>
+        </div>
+        <div style="background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 2.5rem; border-radius: 20px; text-align: center;">
+          <h4 style="font-size: 1.5rem; color: #1e293b; margin-bottom: 1rem;">Website</h4>
+          <div style="background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 15px; font-family: monospace; font-size: 1rem; margin-bottom: 1rem;">
+            cd frontend<br>npm install<br>npm run dev
+          </div>
+          <p style="color: #64748b;">Opens automatically at http://localhost:5173</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <p style="font-size: 1.3rem; color: #4b5563; margin-bottom: 1rem;">🐮 Signup → Post your first ad → Watch buyers come!</p>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2 style="margin-bottom: 1.5rem;">Ready to Launch Your Marketplace?</h2>
+        <p style="font-size: 1.4rem; margin-bottom: 2.5rem; opacity: 0.95;">Perfect for cattle markets, pet shops, or any animal trading business.</p>
+        <button onclick="alert('Demo ready! Run the commands above 🚀')">Try Live Demo Now</button>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

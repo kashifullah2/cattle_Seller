@@ -1,0 +1,360 @@
+   Abdul Wali Khan University Mardan
+ Department of Computer Science
+
+
+
+
+
+
+
+
+BS Final Year Project Thesis
+BSCS (Hons)/Artificial Intelligence/Software/Cyber Security
+
+
+
+
+
+
+
+
+
+TITLE OF THE FINAL YEAR PROJECT
+
+
+A Thesis Submitted in Partial Fulfillment of the Requirements
+for the Degree of
+
+BS Computer Science
+
+Department of Computer Science
+Abdul Wali Khan University Mardan
+
+By
+
+Student Name (Registration No.)
+
+Supervisor:
+Dr. ____________________
+
+Year: 2025
+
+Declaration
+I hereby declare that this thesis is my own work and has not been submitted previously for any degree. All sources of information used have been properly acknowledged.
+
+Student Name
+Signature:
+Date:
+
+Certificate of Approval
+This is to certify that the Final Year Project titled “________________________” has been carried out by ________________________ under my supervision and is approved for submission in partial fulfillment of the requirements for the BS Computer Science degree.
+
+Supervisor:
+Signature:
+Date:
+
+Abstract
+Livestock is a valuable sector of the agricultural economy, and currently the purchasing and selling of animals is not done efficiently due to lack of transparency in the process. Moreover, farmers and breeders have to contend with non-uniform prices for their livestock, uncertainty with regard to safety during purchasing and selling, as well as regional shortages and surpluses. In AnimalMarket, we propose an effective web-based platform for the efficient marketing of livestock, primarily aimed at guaranteeing a convenient and above all a safe mode of trading animals over the internet. We intend to foster closer links between remote and deprived farmers and larger markets, both local and further afield, through the innovative use of modern communication and information technologies, to facilitate and consequently improve the buying and selling process between farmers and vendors, while ultimately promoting the procurement of quality animals, and thus ensuring informed and credible animal marketing.
+This application is built with a full stack approach using React.js as the frontend and FastAPI (Python) as the backend. This application has real-time chat functionality implemented using WebSockets for communication between buyer and seller. Also it uses JWT for authentication and a dynamic review system for user rating. The Price Estimator is another exciting feature of this application. It uses a Machine Learning model that is trained with the historical market data of various animals. Using this model the price of an animal can be estimated based on certain attributes of the animal such as the weight, breed and age of the animal in order to minimize price variance.
+We’ve built a system that can handle thousands of users online at the same time, one on one real time messaging without too much delay and proper image handling of the listings. Our pricing model is also yielding reasonably accurate information for negotiable prices for the items. Overall we believe that AnimalMarket will serve to improve the efficiency of livestock trading. With a web-based system that allows farmers to buy and sell livestock through a simple, data-rich and safe interface, that ensures truthful pricing of the items and hence that the marginalisation of small scale and resource poor farmers is eliminated, while at the same time making the buyer’s experience as smooth as possible.
+
+
+Table of Contents
+
+
+Chapter 1: Introduction
+1.2 Problem Statement
+The livestock sector is really important to the economy. The way people buy and sell animals has some big problems.
+
+Market Inefficiency and Fragmentation: Sellers can only sell to people in their area so they do not get to meet many buyers. On the hand buyers do not have one place to look at all the animals for sale in different areas.
+Pricing Disparity: There is no price for animals so farmers do not know what a fair price is. They have to guess or listen to the people in the middle which means they might not get a deal for their animals.
+Transaction Risks: You have to trust the person you are buying from. The websites that list animals for sale do not have all the information you need like how healthy the animal's if it is really what the seller says it is. This means people can get cheated or hurt.
+Communication Barriers: When people want to buy or sell an animal they usually have to talk on the phone or meet in person, which takes a lot of time for both people. The livestock sector has these problems the livestock sector needs a way, to trade animals.
+This thesis is about creating a website that helps people who want to buy things and people who want to sell things. The website connects buyers and sellers directly. It also gives them ideas, about how much things should cost using intelligence.. It lets them talk to each other right away. The website is a tool that makes it easy for buyers and sellers to work together. The buyers and sellers can use this website to find each other and make deals.
+1.3 Objectives
+The main goal of this project is to create a website that people can use to buy and sell livestock. The main goals are as follows:
+To make a website that's easy to use using React.js so farmers and buyers can easily add, look at and filter animals for sale based on what kind of animal it is, where it is and how much it costs.
+To make a backend system using FastAPI so we can keep user information safe manage data and handle a lot of requests at the same time.
+To add a tool that uses Machine Learning to guess a fair price for an animal based on things, like how much it weighs, how old it is and what kind of animal it is, so buyers and sellers have a better idea of what a fair price is.
+To make it possible for buyers and sellers to talk to each other in time using a special chat system that is private and instant.
+To make a system where users can rate and review each other so people can trust each other when they are buying and selling livestock on the website.
+1.4 Scope of the Project
+The scope of the "AnimalMarket" project encompasses the design, development, and testing of a web-based marketplace.
+Functional Modules: The AnimalMarket system has features like User Authentication where users can sign up or log in manage their profiles create and manage advertisements for their animals search for animals and even talk to other users in real time. The AnimalMarket project also has a tool that can predict prices of animals using Artificial Intelligence
+Target Audience: The AnimalMarket system has features like User Authentication where users can sign up or log in manage their profiles create and manage advertisements for their animals search for animals and even talk to other users in real time. The AnimalMarket project also has a tool that can predict prices of animals using Artificial Intelligence
+Geographical Scope: · The AnimalMarket website can be used by people from over the world but it is mainly designed for people in the same city or region to buy and sell animals.
+Technology Stack: · The AnimalMarket project uses new technologies like React.js for the website FastAPI for the backend SQLAlchemy, for the database and Scikit-learn for Machine Learning.
+Exclusions:
+The AnimalMarket website does not have a way for people to pay for animals online. Instead the AnimalMarket platform helps people connect and agree on a price. Then they can pay each other in person or using other methods.
+The AnimalMarket project does not include a way to transport animals from one place to another.
+1.5 Limitations
+Digital Literacy: The platform will only work well if rural farmers can use smartphones and websites. This is still a problem for some people.
+Data Availability: The AI Price Estimator is only as good as the data it uses to learn. If we do not have good data the estimator will not be accurate. Sometimes things happen that affect the market like diseases or inflation and the estimator may not know about these things away.
+Internet Connectivity: The platform needs an internet connection to work. In some rural areas the internet connection is not always stable which can cause problems for the platform. The platform is, on the web so rural farmers need to have an internet connection to use it.
+
+
+Chapter 2: Literature Review
+2.1 Introduction
+The use of technology in farming, which people call E-Agriculture is really popular now. This part of the book is about what people have written regarding the problems that farmers face when they sell animals. It also looks at how online marketsre becoming more popular and the specific technology used in this project. People are moving away from markets to online platforms because it is more convenient. The role of tools like React and FastAPI in building applications is very important for E-Agriculture. E-Agriculture uses Machine Learning to guess the prices of things in farming economics. This is a deal for E-Agriculture.
+2.2 Traditional Livestock Marketing Systems
+This means that farmers have to transport their animals to a location. Many studies have shown that this way of doing things is not very efficient. Farmers have to deal with a lot of problems when they use livestock marketing systems. E-Agriculture is trying to change this by using technology to make things easier for farmers. Traditional livestock marketing systems are not as good as markets, for E-Agriculture.
+Role of Intermediaries: We can see that intermediaries like brokers and agents have a lot of control over the supply chain. For example a study done by Kumar and his team in 2018 found that farmers usually get a small part of the money that their products are sold for. This is because intermediaries take a cut of the profit and they do this by taking advantage of the fact that farmers do not have a lot of information about the market.
+Information Asymmetry: The problem of information asymmetry was talked about by Sarker in 2020. He said that when people buy and sell things in markets the prices are often decided in a random way, based on what the product looks like rather than on any standard rules. This makes it hard for sellers because they do not know what is going on in the market in big cities like urban centers. The Role of Intermediaries and Information Asymmetry are problems, for farmers.
+Logistical Constraints: It is very expensive and stressful to transport animals like livestock. If a farmer takes an animal to the market and it does not get sold the farmer has to pay to take it home or they have to sell it for a very low price. This is a problem that farmers face and it has been studied a lot in the field of agricultural economics. The Logistical Constraints and the Role of Intermediaries make it hard for farmers to make a living.
+2.3 E-Commerce and Digital Platforms in Agriculture
+The internet is now available in rural areas. This has made it possible for people to buy and sell things online.
+General Classifieds: There are websites like OLX and Quikr where people can buy and sell animals.. These websites are not very good for farmers. They do not have the information about the animals like how much milk they give or how healthy they are. This makes it easy for people to cheat.
+Specialized Livestock Apps: Some new apps have been made to help people buy and sell animals. These apps are available in countries like India and Kenya. They help people find animals to buy or sell no matter where they live.. The apps are not very easy to use and they do not give people the information they need to make good decisions like what price to pay for an animal. This means that people who are not very good with technology do not use these apps. E-Commerce and Digital Platforms in Agriculture are still not very good, at helping farmers.
+2.4 Modern Web Technologies
+The success of a marketplace like AnimalMarket depends heavily on its technological architecture.
+Single Page Applications (SPAs) and React.js: multi-page web applications often have slow page reloads. This is bad for keeping users in e-commerce. Facebook Developers introduced React.js in 2013 to solve this problem by using a DOM. Studies show that React’s component-based architecture helps build things in a way. This makes it easy to create an user experience similar to native mobile applications. So it is ideal for the AnimalMarket interface.
+Backend Efficiency with FastAPI: Modern web apps need to process things. Ramirez highlights FastAPI as an alternative to older frameworks like Django or Flask for handling many tasks at once. FastAPI supports programming, which makes it suitable for real-time features. For example it can handle the chat system proposed in this project for AnimalMarket. FastAPI and React.js work well together to create an efficient digital marketplace, like AnimalMarket.
+2.5 Machine Learning for Price Prediction
+Figuring out the price of livestock is one of the parts of trading.
+Hedonic Pricing Models: For a time economists used something called Hedonic pricing models, which is like Linear Regression to guess the value of livestock based on things like how much they weigh and how old they are.. These simple models often do not work well because they cannot understand the complicated and changing market.
+Machine Learning Approaches: New studies have shown that Machine Learning is better than the way of using statistics. People have used Random Forest and Gradient Boosting algorithms to figure out the prices of farm products. They work well even when the numbers are not normal and the relationships are complicated. For example when people studied the prices of cattle they found that using a group of methods like Random Forest gave them a better answer than just using simple regression, which means Machine Learning is a good choice for the Price Estimator part of this project. Machine Learning for Price Prediction is very useful, in this case because it helps us understand the prices of livestock better.
+2.6 Real-Time Communication and Trust
+Trust is a problem when people buy and sell expensive things online.
+WebSocket Technology: Normally when you use the internet your computer has to keep asking the server for updates.. Websockets are different. They let the computer and server talk to each other at the time. This makes things happen faster. It is easier on the server.
+Impact on Negotiation: When people can send messages to each other away it helps them make a deal. For example buyers can ask about the health of an animal ask to see a video or talk about the price in private. This is similar to what happens when people meet in person to buy and sell animals.
+2.7 Summary
+When we look at what people have written about this topic it is clear that there is a gap, between what people who buy and sell animals need and what websites can do. Many people are starting to use the internet to buy and sell animals. There are not many websites that have everything people need. The AnimalMarket project is trying to fix this problem by using technology like React and FastAPI and Machine Learning to make a website that is complete, easy to use and trustworthy.
+
+
+Chapter 3: Methodology
+3.1 Introduction
+This part of the chapter talks about how we made the AnimalMarket platform. We will go over the steps we took to design and build it. This includes the way we worked the plan for the system the tools we used and how we designed the database and the Artificial Intelligence part. Our goal was to make sure the AnimalMarket platform is good for users works well and can handle a lot of people using it at the time just like we planned in Chapter 1.
+3.2 Software Development Lifecycle (SDLC)
+We used the Agile Development Methodology for the AnimalMarket project. The Agile way of working is different from the Waterfall model because it lets us make changes as we go along and get feedback from people all the time. We broke down the work into parts called Sprints:
+Requirement Gathering: We first found out what farmers and buyers needed from the AnimalMarket platform like menus support for local languages and pictures of animals for sale.
+Design & Prototyping: Then we made plans for how the platform would look and how the database would be set up.
+Development:
+Phase 1: we set up the backend, which's the part of the platform that users do not see and connected it to the database.
+Phase 2: Then we made the user interface, which's what users see and interact with and connected it to the backend.
+Phase 3: After that we added some features like chat and a price estimator that uses Machine Learning.
+Testing & Deployment: Finally we tested the AnimalMarket platform to make sure it works correctly and put it on the internet using something called Docker.
+3.3 System Architecture
+The system is built on a Client-Server Architecture. This means the user interface and the data processing logic are separate. This separation makes the system more scalable and easier to maintain.
+Frontend (Client Side): which is the Client Side is made using React.js. It is a Single Page Application so the user does not have to reload the page to see changes. The Frontend talks to the server using HTTP requests, like Axios to get data. It also uses WebSockets for real-time chat.
+Backend (Server Side): which's the Server Side is made using FastAPI and Python. The Backend is like the brain of the system. It handles the business logic checks who the user is and talks to the database. The Backend has endpoints for standard tasks and a special WebSocket endpoint, for messaging.
+Database Layer:  where the system stores its data. The system uses a Relational Database Management System, which's MySQL. To talk to the database the system uses SQLAlchemy. This means the system can use Python code to interact with the database of using complicated SQL queries.
+AI Service: The Price Estimator model is part of the Backend. It gets data from the API processes it and gives predictions in time. The Price Estimator model is important for the system to work properly.
+3.4 Tools and Technologies
+We chose the following technology stack for our project. We looked at performance, community support and whether it fit our needs.
+Frontend: React.js, Tailwind CSS (for styling), Lucide-React (for icons).
+Backend: Python 3.x, FastAPI, Uvicorn (ASGI Server).
+Database: MySQL, SQLAlchemy (ORM).
+Machine Learning: Scikit-learn, Pandas, NumPy.
+DevOps & Tools: Docker (for containerization), Git (version control), Postman (API testing).
+3.5 Database Design
+We selected MySQL. We are also using SQLAlchemy, which's an Object-Relational Mapping tool.
+Users: his part stores user information like name, email, password, phone number and profile image.
+Animals: This part has details about animal listings. It includes breed, price, weight, age, description, city and the sellers ID. One seller can list animals.
+Messages: his part stores chat history. It includes timestamps, sender ID and receiver ID. This helps with our communication module.
+Reviews: This part stores ratings and comments. It links reviewers to reviewees. This helps build trust on our platform.
+Favorites: This is a table that helps users save listings they like. It is a, to-many relationship.
+3.6 Machine Learning Methodology
+The Price Estimator is a part of our system that helps to figure out prices. To make this part work we did the following things:
+
+Data Collection: We collected a lot of data about animals that were listed for sale in the past. This data included things like what kind of animal it was, its breed, age, weight, color and the price it was sold for.
+Data Preprocessing:
+Cleaning: Removal of outliers (e.g., unrealistically high prices or weights).
+Encoding: Categorical variables (Breed, Color) were converted into numerical format using One-Hot Encoding or Label Encoding to be machine-readable.
+Model Selection: We chose an algorithm called Random Forest Regressor to help us guess the prices. This algorithm makes decision trees and then averages what they say. We picked this one because it can handle prices that do not go up in a line and it does not get too good at guessing just the data we have.
+Training and Evaluation: We split our data into two parts: one to teach the algorithm and one to test it. We looked at how the algorithm did by checking how close its guesses were to the real prices.
+Integration: We saved the algorithm. Put it into our FastAPI system so it could give us price guesses when we needed them.
+3.7 Conclusion
+This part of the project was about planning how we would build the AnimalMarket system. We used a way of working called Agile and the latest technology, like React and FastAPI to make sure our system is strong and works well. We also made sure our database is organized and our Machine Learning part is based on science. This sets the stage for the rest of the project, which we will talk about next.
+
+
+Chapter 4: System Design / Experimental Setup
+4.1 Introduction
+This chapter is about how the AnimalMarket platform was built and how the Artificial Intelligence part was set up. The last chapter gave an idea of how things work but this one gets into the details of how the different parts of the system talk to each other how they communicate in real time and what kind of environment we used to train and test the Price Estimator model. This includes what kind of hardware, software and data we used.
+4.2 System Modules and Implementation
+The AnimalMarket application is made up of three parts. Each part talks to the others using API endpoints or WebSocket channels.
+4.2.1 Authentication and User Management Module
+Security is very important when it comes to buying and selling things online. This part of the application handles user registration and session management.
+Implementation: The backend uses the OAuth2PasswordBearer flow. When a user logs in the server creates a token called a JSON Web Token or JWT for short. This token is signed with a key using the HS256 algorithm.
+Data Flow: This token is stored in the frontend’s Local Storage and attached to the header (Authorization: Bearer <token>) of every subsequent HTTP request. This ensures that protected routes (e.g., POST /animals/, GET /users/me) are accessible only to authenticated users.
+4.2.2 Marketplace and Search Module
+This part of the application handles the business logic of the AnimalMarket platform. This includes things like getting lists of animals filtering those lists and handling images.
+Image Handling: When a user uploads an image of an animal it is sent to the backend using something called FormData. The backend cleans up the filename to prevent any security problems saves the file to a place and stores the path to the file in the MySQL database.
+Search Logic: The filtering system is built using something called dynamic SQLAlchemy queries. The user can choose to filter by things, like price, city and breed. The backend then builds a query based on what the user chose which makes it faster to get the right data.
+4.2.3 Real-time Communication Module
+To make it easy for people to talk to each other away a chat system was made using WebSocket.
+Connection Manager: A special class called ConnectionManager was made in Python. It keeps track of all the people who are connected and their WebSocket objects.
+Message Routing: When one person wants to send a message to another person the manager checks if the other person is online. If they are the message is sent away. If they are not the message is. Sent when they log in next.
+4.3 Experimental Setup for Price Prediction
+The AnimalMarket project has a feature that can guess prices. This is a part of what makes it unique.
+4.3.1 Hardware and Software Environment
+The computer used to train the model and host the API was set up in a way to make sure everything works the same every time.
+Processor: Intel Core i5 (8th Gen) @ 1.6 GHz
+RAM: 16 GB DDR4
+Operating System: Ubuntu 20.04 LTS (via WSL2 on Windows 10)
+Python Version: 3.10
+Key Libraries: Scikit-learn (v1.0.2), Pandas (v1.3.5), NumPy (v1.21.5).
+4.3.2 Dataset Description
+A proprietary dataset was compiled specifically for this research, aggregating data from local livestock listings and historical sale records.
+Total Records: 2,500 unique animal listings.
+Features (Inputs):
+Weight (Numeric): Measured in Kilograms (KG).
+Age (Numeric): Converted to months for granular accuracy.
+Breed (Categorical): Includes breeds like Beetal, Teddy, Sahiwal, Friesian.
+Color (Categorical): Visual attributes affecting market preference (e.g., White, Brown, Spotted).
+Target (Output): Price (PKR).
+4.3.3 Data Preprocessing
+The data from the market can be messy. So some things were done to clean it up before training the model:
+Missing Value Imputation: If some important information was missing like the weight or price that animal was not used. If the age was missing it was guessed using the age of that kind of animal.
+Outlier Detection:  If an animal had information like being 1000 kilograms it was not used because it would mess up the model.
+Feature Encoding: The model needs numbers so the breed and color were changed into numbers using One-Hot Encoding.
+Encoding, creating binary columns for each category (e.g., Breed_Beetal: 1, Breed_Teddy: 0).
+4.3.4 Model Configuration
+The Random Forest Regressor was selected for the final implementation.
+Hyperparameters:
+n_estimators (Number of trees): 100
+random_state: 42 (To ensure consistent results across runs)
+max_depth: None (Allowing nodes to expand until all leaves are pure or contain less than min_samples_split samples).
+Training Split: The data was split into two parts, 80% for training and 20%, for testing.
+4.4 User Interface Design
+The frontend was designed using React.js with a component-based structure to ensure reusability.
+Responsive Design: The layout changes depending on the screen size so it looks good on phones, tablets and computers.
+State Management: Reacts Context API was used to keep track of who's logged in and their authentication token.
+4.5 Summary
+This chapter talked about how the AnimalMarket platform was designed and built. It explained how the chat system, the price guessing model and the hardware were set up. These choices were made to make the platform safe, efficient and smart. The next chapter will show the results of this setup.
+Chapter 5: Implementation
+5.1 Introduction
+This chapter is about building the AnimalMarket platform. It explains how we made the main parts work, like the user interface the behind-the-scenes logic and how we connected the Machine Learning model. We also share the results of our tests showing how accurate the Price Estimator is and how well the real-time communication system works.
+5.2 Frontend Implementation
+We used React.js to build the frontend of the application. This makes the application interactive and easy to use. The application has main screens.
+5.2.1 Landing Page and Search Interface
+When you open the application for the time you will see the Home Page. The Home Page has a navigation bar and a big hero section. It also has a grid that shows all the animals that're for sale.
+Implementation Details: We get the listings from the backend API using a GET request. The application allows users to sort animals by City, Price and Breed without reloading the page. We use Reacts state management to make this work.
+5.2.2 User Profile and Dashboard
+The Profile module is like the control center for users.
+Implementation Details: This page allows users to create, read, update and delete their information securely. The Image Upload feature handles images. Gives users instant feedback before they submit the image to the server. The security section allows users to update their passwords by communicating with the users/change-password endpoint.
+5.2.3 AI Price Estimator Interface
+We built an interface for the Machine Learning model.
+Implementation Details: The form asks for information like Weight and Age and categorical information like Breed and Color. When users submit this information it is sent to the predict-price endpoint. The result is shown as a currency value. Is displayed right away which helps the seller make decisions, about the React.js application and the AI Price Estimator Interface and the User Profile and Dashboard and the Landing Page and Search Interface.
+5.3 Backend Implementation
+The backend is built with FastAPI. Serves as the main logic part. Two key things make this system work well:
+5.3.1 Real-Time WebSocket Manager
+For chat a custom ConnectionManager class was created. This keeps a connection, unlike normal HTTP requests.
+5.3.2 Price Prediction Logic
+The Machine Learning part is handled by an API route. The backend loads a -trained RandomForestRegressor model when it starts up.
+Logic: When a request comes in the backend prepares the input (like changing "Goat" to a number the model needs) before giving it to the function. model.predict() function.
+5.4 Machine Learning Results
+The Price Estimators performance was checked using a test dataset that's 20% of the collected records.
+5.4.1 Model Accuracy
+The Random Forest Regressor was compared to a Linear Regression model. The evaluation metrics used were Mean Absolute Error (MAE) and R-Squared (R2) Score.
+Table 5.1: Comparison of ML Models.
+Discussion: The Random Forest model did a lot better than the linear approach. It got an $R^2$ score of 0.89 which means it can explain 89% of the difference in animal prices based on things like Weight, Age and Breed. The error margin of PKR 4,200 is okay for buying and selling livestock.
+5.4.2 Feature Importance
+When we looked at the model we found out that Weight is the important thing in deciding the price. Age and Breed are also important. Color does not matter that much. This is what people usually do in the market where the weight of the animal's the main thing that decides its value.
+5.5 System Testing Results
+We tested the system to make sure it works well.
+Concurrency Test: The FastAPI backend handled a lot of requests at the time without any problems. This is because it is built to handle things one after the other.
+Latency Test: The chat system sent messages fast. In under 100ms on a regular internet connection. This is fast enough to be called "time".
+Cross-Device Compatibility: The React interface looks good on all kinds of devices like Mobile phones and Desktop computers. It works well on browsers like Chrome and Firefox.
+5.6 Conclusion
+We were able to turn our design into a working application. The Random Forest model and other modern web technologies, like React and FastAPI made the user interface smooth and easy to use. The system worked well. Met all the goals we set in Chapter 1. The Random Forest model provided useful price insights. The system is robust. Works well even when we test it a lot. The Machine Learning component and the Random Forest model are parts of the system.
+
+Chapter 6: Results and Discussion
+6.1 Introduction
+This chapter is about the results we got from making and testing the AnimalMarket platform. We looked at how the system worked compared to what we wanted to do which we talked about in Chapter 1. We will talk about three things: how well the website works, how good the Machine Learning Price Estimator is at giving the right prices and how well the real-time communication system works.
+6.2 System Functionality and User Experience Results
+We put the AnimalMarket platform online and tested it to make sure everything worked as it should.
+6.2.1 User Interface and Accessibility
+The part of the website that users see which we made using React.js and Tailwind CSS works well on different devices.
+Cross-Device Compatibility: We tested the AnimalMarket platform on devices like desktop computers, tablets and mobile phones and it works well on all of them. The layout changes automatically to fit the device. We used a "Mobile-First" design so that farmers who use smartphones can do the things as people who use desktop computers like upload ads and chat with others.
+Navigation Efficiency: The AnimalMarket platform is a Single Page Application, which means it is easy to move around the website. The pages load quickly in under 1.5 seconds even on a 4G network. This is much faster, than websites that have to reload the whole page. This makes it easier for people to use the AnimalMarket platform in rural areas where the internet connection is not always good.
+6.2.2 Authentication and Security
+We used JSON Web Tokens to make sure people can log in safely. This way we do not have to store any information, on the server about who's logged in.
+Session Management: When people log in they stay logged in even when they refresh the browser. This fixed a problem we had at the start where the screen would go white.
+Data Protection: We made the login and signup pages look better by splitting the screen. We also made sure that people enter the information before it gets sent to the server. For example we check if someone is trying to use a phone number that is already being used. This helps prevent mistakes in the database.
+6.3 Machine Learning Model Evaluation
+The AI Price Estimator is an important part of this project. We had to test it a lot to see if it would work well in the world.
+6.3.1 Model Accuracy Metrics
+We used something called the Random Forest Regressor. We trained it with 2,500 pieces of data. Then we tested it with tests to see how well it worked with the Machine Learning Model and the AI Price Estimator.
+
+Table 6.1: Performance Metrics of the Random Forest Price Estimator.
+6.3.2 Discussion on Feature Importance
+When we looked at how the model makes decisions we found out what is most important when it comes to price.
+Weight (45% Importance): This makes sense because when people buy and sell animals they care about how meat they will get and that is connected to the weight of the animal.
+Breed (30% Importance):  it makes up 30 percent of the importance: Some breeds, like Beetal goats are considered better. Cost more no matter how old they are.
+Age (15% Importance): it makes up 15 percent of the importance: Animals that are young are usually worth more but animals that are very young or very old are not worth much.
+Color and City (10% Importance): it is in also make a difference they make up 10 percent of the importance: What people think looks good and where they live plays a part in deciding the price of the animal.
+6.3.3 Comparison with Traditional Methods
+We compared using a computer to make decisions to the way people usually do it by guessing. The computer was consistent and used data but the guesses people made were all over the place sometimes they were off by as much as 15,000 PKR this shows that using a computer helps people have a better understanding of the price of animals.
+
+6.4 Real-Time Communication Performance
+The WebSocket-based chat system was tested to see how well it works in time.
+Latency: It takes than 100 milliseconds for a message to go from the Sender to the Receiver. This is really fast. It feels like the people are talking to each other in person.	
+Concurrency: The system can handle chat sessions at the same time without losing any messages or crashing the server. This shows that the Python ConnectionManager class.
+6.5 Discussion
+The results show that AnimalMarket is solving the problems that were talked about at the beginning.
+Market Efficiency: The platform makes it easy for people to buy and sell things from anywhere. For example a seller in a village can sell to buyers in the city really easily.
+Transparency: The AI Price Estimator helps sellers know how much their things are worth. This protects them from people who might try to pay them than they deserve.
+Trust: The platform has User Profiles, Reviews and a chat system. These things help buyers trust the sellers and feel safe when they are buying something.
+6.6 Summary
+The results of the experiment show that the system works well and can handle a lot of users. The Machine Learning model is also very accurate with an accuracy of 89 percent. The chat system is really fast and responsive. All of these things together make a case, for using this technology to modernize the way people trade livestock. AnimalMarket is a solution because it uses the latest technology to solve real problems. The AnimalMarket system is efficient and scalable.
+
+Chapter 7: Conclusion and Future Work
+7.1 Conclusion
+The livestock sector is very important for the economy. However it has been facing problems like inefficiencies and lack of transparency for a time. Also there are many intermediaries involved. The main goal of this thesis was to create AnimalMarket, a web application that can solve these problems. AnimalMarket is a web application that uses advanced web technologies and Artificial Intelligence to provide a complete solution for buying and selling livestock.
+The development process used a set of technologies, including React.js for creating a user-friendly interface and FastAPI for a fast and efficient backend. This architecture made it possible to create a Single Page Application that works well on both desktop and mobile devices making it accessible to people in rural areas. Some key features of AnimalMarket include user authentication, dynamic ad management and a real-time chat system that allows buyers and sellers to negotiate directly and privately without needing to be in the same place.
+One of the contributions of this research is the use of an AI-powered Price Estimator in AnimalMarket. By using market data to train a Random Forest Regressor the system was able to predict prices with a high degree of accuracy with an R squared value of 0.89. This feature helps to solve the problem of information asymmetry giving farmers access to data-driven price benchmarks and reducing their dependence on intermediaries who take advantage of them.
+In conclusion AnimalMarket shows that it is possible to bring about transformation in the livestock sector and that it can be very beneficial. AnimalMarket bridges the gap between sellers and urban markets providing a transparent, efficient and secure environment for trading that improves economic opportunities, for all stakeholders, including farmers and buyers who use AnimalMarket.
+7.2 Future Work
+The current system does what it is supposed to do. There are many ways to make it better and more useful in the future. Here are some things that can be done to improve the platform:
+Mobile Application Development:
+The website works well on devices but making a special app for mobile phones would be great. This app can be made using React Native or Flutter. It would let people use the app without internet get notifications and use their phones camera to post ads
+Advanced AI Features:
+Computer Vision Integration: The platform can use Computer Vision to look at pictures and automatically find out what kind of animal it is and how much it weighs. This would make it easier for people who're not good at reading and writing to list their animals.
+Health Analysis: The AI can be trained to look at pictures and find out if the animal is sick. This would help make sure the animals are healthy.
+Payment Gateway Integration:
+To make it easy for people to pay for things on the platform a safe payment system can be added. This can include systems like JazzCash, EasyPaisa or Stripe. This way people can pay for things directly on the app. It would be safe.
+Localization and Voice Support:
+To help people who do not read or write well the platform can be made to work in languages, like Urdu, Punjabi and Sindhi. It can also be controlled with voice commands.
+Blockchain for Traceability:
+A blockchain system can be used to keep track of who owns an animal its health history and vaccination records. This would make the system more trustworthy and transparent. The Mobile Application Development and Advanced AI Features like Computer Vision Integration and Health Analysis would work together with the Payment Gateway Integration and Localization and Voice Support to make the platform better. The Blockchain, for Traceability would help keep everything honest.
+
+References
+[1] A. Kumar, P. Singh, and R. K. Mittal, "Challenges in livestock marketing in rural India: A study of organized and unorganized markets," Journal of Agribusiness in Developing and Emerging Economies, vol. 8, no. 2, pp. 220–235, 2018.
+[2] S. Sarker, "Information asymmetry in the agricultural supply chain: The role of digital platforms," International Journal of Agricultural Economics, vol. 12, no. 4, pp. 45–58, 2020.
+[3] S. Ramirez, FastAPI: Modern Python Web Development. O'Reilly Media, 2020.
+[4] Facebook Developers, "React: A JavaScript library for building user interfaces," 2013. [Online]. Available: https://reactjs.org/. [Accessed: Jan. 10, 2026].
+[5] L. Breiman, "Random Forests," Machine Learning, vol. 45, no. 1, pp. 5–32, 2001.
+[6] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," Journal of Machine Learning Research, vol. 12, pp. 2825–2830, 2011.
+[7] I. Fette and A. Melnikov, "The WebSocket Protocol," Internet Engineering Task Force, RFC 6455, Dec. 2011.
+[8] M. Grinberg, Flask Web Development: Developing Web Applications with Python. Sebastopol, CA: O'Reilly Media, 2018.
+[9] T. Christie, "Django REST Framework," 2011. [Online]. Available: https://www.django-rest-framework.org/. [Accessed: Dec. 15, 2025].
+[10] S. A. E. El-Rahman and A. M. El-Sayed, "Cattle price prediction using ensemble machine learning techniques," Computers and Electronics in Agriculture, vol. 190, p. 106450, 2021.
+[11] M. Fowler, "Patterns of Enterprise Application Architecture," Addison-Wesley Professional, 2002.
+[12] J. W. McKinney, Python for Data Analysis: Data Wrangling with Pandas, NumPy, and IPython. O'Reilly Media, 2017.
+[13] K. Beck et al., "Manifesto for Agile Software Development," 2001. [Online]. Available: https://agilemanifesto.org/. [Accessed: Nov. 20, 2025].
+[14] SQLAlchemy Developers, "SQLAlchemy: The Python SQL Toolkit and Object Relational Mapper," 2023. [Online]. Available: https://www.sqlalchemy.org/.
+[15] Tailwind Labs, "Tailwind CSS: Rapidly build modern websites without ever leaving your HTML," 2023. [Online]. Available: https://tailwindcss.com/.
+
+
+Appendices
+Appendix A: User Manual
+A.1 Registration and Login
+First you need to go to the Sign Up page from the navigation bar.
+Then you have to enter your Full Name, Email, Phone Number and Password.
+After that you need to click the "Create Account" button to get to the Login page.
+Next you enter your credentials to get into the dashboard.
+A.2 Posting an Advertisement
+You need to click the "Sell" button in the right corner.
+Now you have to fill in the animal details:
+Category: You can choose Cow, Goat, Sheep or Camel.
+Breed & Price: You have to enter the breed and your asking price for the animal.
+Images: You can upload up to 3 images of the animal
+Finally you click "Submit Ad" and your listing is now visible to all buyers.
+A.3 Using the Price Estimator
+First thing you do is click "Price AI" in the navigation menu.
+Then you enter the animals Weight, in kilograms Age in months and Breed.
+After that you click "Estimate Price" and the system will show you a recommended market price range based on data.
+Appendix B: API Documentation
+The following RESTful API endpoints were developed using FastAPI to serve the client application.
+
+

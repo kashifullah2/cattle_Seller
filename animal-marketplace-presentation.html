@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Marketplace - Professional Presentation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%); color: white; height: 100vh; }
+    .slide { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5%; position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transform: scale(0.9) translateY(50px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .slide.active { opacity: 1; transform: scale(1) translateY(0); }
+    .slide h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .slide h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; opacity: 0.95; }
+    .slide h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+    .icon { font-size: clamp(2.5rem, 7vw, 5rem); margin-bottom: 1.5rem; color: #fbbf24; text-shadow: 0 0 20px rgba(251,191,36,0.6); }
+    .content { max-width: 900px; font-size: clamp(1.1rem, 2.5vw, 1.6rem); line-height: 1.6; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin-top: 2rem; }
+    .feature { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; max-width: 800px; margin-top: 2rem; }
+    .tech-card { background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); backdrop-filter: blur(15px); padding: 2rem 1.5rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; }
+    .tech-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .tech-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .arch-diagram { max-width: 800px; margin: 2rem auto 0; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+    .arrows { font-size: 2rem; margin: 0 1rem; opacity: 0.7; }
+    .slide-number { position: fixed; bottom: 2rem; right: 2rem; background: rgba(0,0,0,0.5); color: white; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; font-size: 1.1rem; }
+    .nav-hint { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.8); font-size: 1.1rem; }
+    .img-showcase { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; max-width: 1000px; margin-top: 2rem; }
+    .showcase-img { width: 220px; height: 140px; object-fit: cover; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: transform 0.4s; }
+    .showcase-img:hover { transform: scale(1.05); }
+    @media (max-width: 768px) { .slide { padding: 0 10%; } .content { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+  <!-- Slide 1: Title -->
+  <div class="slide active" data-slide="1">
+    <i class="fas fa-bullseye icon"></i>
+    <h1>Animal Marketplace</h1>
+    <h2>Cattle Seller Platform</h2>
+    <p class="content">Modern solution for buying &amp; selling livestock, pets, and poultry<br><span style="opacity: 0.8;">with AI pricing, instant chat, and trusted ratings</span></p>
+    <div style="margin-top: 3rem; font-size: 1.3rem; opacity: 0.9;">Presented by [Your Name]</div>
+  </div>
+
+  <!-- Slide 2: Problem -->
+  <div class="slide" data-slide="2">
+    <i class="fas fa-lightbulb icon"></i>
+    <h1>The Current Challenge</h1>
+    <div class="content" style="max-width: 800px; font-size: 1.4rem;">
+      <div style="margin-bottom: 2rem;">
+        <i class="fas fa-clock" style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-size: 2.2rem; margin-bottom: 1rem;">Time Wasted Visiting Markets</h3>
+        <p>Farmers drive hours to sell animals. Buyers waste days searching locally.</p>
+      </div>
+      <div style="margin-bottom: 2rem;">
+        <i class="fas fa-gavel" style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-size: 2.2rem; margin-bottom: 1rem;">No Fair Price Discovery</h3>
+        <p>No reliable way to know market rates. Risk of under-selling or overpaying.</p>
+      </div>
+      <div>
+        <i class="fas fa-comments" style="color: #fbbf24; font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-size: 2.2rem; margin-bottom: 1rem;">Difficult Communication</h3>
+        <p>Phone tag, missed calls, delayed negotiations between buyers &amp; sellers.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Solution -->
+  <div class="slide" data-slide="3">
+    <i class="fas fa-rocket icon"></i>
+    <h1>Our Solution</h1>
+    <div class="content">
+<h3 style="margin-bottom: 2rem;">📱 Live App Demo</h3>
+      <div class="img-showcase">
+        <img src="./screenshots/main page animal list.png" alt="Home Feed" class="showcase-img" title="Main animal listings">
+        <img src="./screenshots/post ad.png" alt="Post Ad" class="showcase-img" title="Create new listing">
+        <img src="./screenshots/dashboard.png" alt="My Dashboard" class="showcase-img" title="Manage listings">
+      </div>
+      <p style="margin-top: 2rem; font-size: 1.5rem;">Post ads → Get fair AI prices → Chat instantly → Close deals safely</p>
+    </div>
+  </div>
+
+  <!-- Slide 4: Features -->
+  <div class="slide" data-slide="4">
+    <i class="fas fa-brain icon"></i>
+    <h1>Smart Features</h1>
+    <div class="features-grid">
+      <div class="feature">
+        <i class="fas fa-magic" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1rem;"></i>
+        <h3>AI Price Predictor</h3>
+        <p>Enter weight + breed → Get instant market price. Sell confidently!</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-comments" style="font-size: 2.5rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+        <h3>Instant Chat</h3>
+        <p>Real-time messaging. No phone numbers needed. Negotiate fast.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-star" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;"></i>
+        <h3>Seller Ratings</h3>
+        <p>Check ratings + reviews. Buy from trusted sellers only.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-filter" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 1rem;"></i>
+        <h3>Smart Search</h3>
+        <p>Filter by city, animal type, price range. Find exactly what you need.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Tech Stack -->
+  <div class="slide" data-slide="5">
+    <i class="fas fa-cogs icon"></i>
+    <h1>Built with Modern Technology</h1>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <i class="fab fa-react tech-icon" style="color: #61dafb;"></i>
+        <div>React + Vite</div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-bolt tech-icon" style="color: #f04446;"></i>
+        <div>FastAPI</div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-database tech-icon" style="color: #ef4444;"></i>
+        <div>SQL Database</div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-comments tech-icon" style="color: #06b6d4;"></i>
+        <div>WebSocket Chat</div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-robot tech-icon" style="color: #eab308;"></i>
+        <div>AI/ML Pricing</div>
+      </div>
+      <div class="tech-card">
+        <i class="fab fa-html5 tech-icon" style="color: #e34f26;"></i>
+        <div>Responsive Design</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Architecture -->
+  <div class="slide" data-slide="6">
+    <i class="fas fa-layer-group icon"></i>
+    <h1>System Architecture</h1>
+    <div class="arch-diagram">
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; font-size: 1.6rem;">
+        <div style="background: linear-gradient(135deg, #60a5fa, #3b82f6); padding: 1.5rem 3rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(59,130,246,0.4);">
+          <i class="fas fa-mobile-alt" style="font-size: 2.5rem; margin-right: 1rem;"></i>
+          React Frontend
+        </div>
+        <span class="arrows">➜</span>
+        <div style="background: linear-gradient(135deg, #34d399, #10b981); padding: 1.5rem 3rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(16,185,129,0.4);">
+          <i class="fas fa-server" style="font-size: 2.5rem; margin-right: 1rem;"></i>
+          FastAPI Backend
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 8px 25px rgba(245,158,11,0.4); font-weight: bold;">AI Price Model</div>
+        <span class="arrows">↕</span>
+        <div style="background: linear-gradient(135deg, #ec4899, #db2777); padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 8px 25px rgba(236,72,153,0.4); font-weight: bold;">SQLite Database</div>
+        <span class="arrows">↕</span>
+        <div style="background: linear-gradient(135deg, #06b6d4, #0891b2); padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 8px 25px rgba(6,182,212,0.4); font-weight: bold;">File Storage</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-number" id="slide-number">1 / 6</div>
+  <div class="nav-hint">← → or Spacebar to navigate | Esc to exit</div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      document.getElementById('slide-number').textContent = `${n+1} / ${totalSlides}`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      } else if (e.key === 'Escape') {
+        document.exitPointerLock?.();
+      }
+    });
+
+    // Click to next
+    document.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    });
+
+    // Fullscreen on F11
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    });
+  </script>
+</body>
+</html>

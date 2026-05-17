@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cattle Seller - Animal Marketplace | Project Presentation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.8rem; font-weight: bold; color: white; }
+    .hero { text-align: center; padding: 4rem 0; color: white; }
+    .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(45deg, #fff, #f0f0f0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.3rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
+    .section { background: rgba(255,255,255,0.95); margin: 3rem 0; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); backdrop-filter: blur(10px); }
+    .section h2 { font-size: 2.5rem; margin-bottom: 1.5rem; color: #2d3748; position: relative; }
+    .section h2::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 60px; height: 4px; background: linear-gradient(90deg, #667eea, #764ba2); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+    .card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .tech { background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 500; font-size: 0.9rem; }
+    .demo-images { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .demo-img { width: 250px; height: 150px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.3s; }
+    .demo-img:hover { transform: scale(1.05); }
+    pre { background: #1a1a1a; color: #f8f8f2; padding: 1.5rem; border-radius: 10px; overflow-x: auto; font-family: 'Monaco', monospace; font-size: 0.9rem; }
+    .endpoint { margin-bottom: 1rem; }
+    .endpoint h4 { color: #48bb78; margin-bottom: 0.5rem; }
+    .features-list { list-style: none; }
+    .features-list li { padding: 1rem; margin-bottom: 0.5rem; background: #f7fafc; border-radius: 10px; display: flex; align-items: center; gap: 1rem; }
+    .features-list li::before { content: '✅'; font-size: 1.2rem; }
+    @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .section { padding: 2rem; margin: 2rem 0; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">🐄 Cattle Seller</div>
+        <div></div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Animal Marketplace Platform</h1>
+      <p>A full-stack web application for buying/selling livestock &amp; pets with AI price prediction, chat, reviews, and advanced search/filtering.</p>
+      <img src="backend/static/uploads/user_1_1767312874_images.jpeg" alt="Hero Image" style="width:300px; height:200px; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.3);">
+    </div>
+  </section>
+
+  <div class="container">
+
+    <section class="section">
+      <h2>🎯 Project Overview</h2>
+      <p style="font-size:1.1rem; color:#4a5568; line-height:1.8;">
+        Cattle Seller is a comprehensive online marketplace for animals (cows, goats, camels, pets etc.). 
+        Users can post ads with multiple images, filter/search by category/city/price, chat with sellers, leave reviews, 
+        favorite listings, and get AI-powered price predictions based on weight/breed/color.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>🛠️ Tech Stack</h2>
+      <div class="tech-stack">
+        <span class="tech">FastAPI</span>
+        <span class="tech">SQLAlchemy (SQLite)</span>
+        <span class="tech">React 18</span>
+        <span class="tech">Vite</span>
+        <span class="tech">Tailwind CSS</span>
+        <span class="tech">JWT Auth</span>
+        <span class="tech">WebSocket Chat</span>
+        <span class="tech">Scikit-learn ML</span>
+        <span class="tech">Pydantic</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>✨ Key Features</h2>
+      <ul class="features-list">
+        <li><b>📱 Responsive Home Feed</b> - Category carousel, advanced filters (type/city/price), search, sorting</li>
+        <li><b>📤 Post Ad</b> - Multi-image upload, rich form, AI price estimator</li>
+        <li><b>💬 Real-time Chat</b> - WebSocket messaging, unread notifications</li>
+        <li><b>⭐ Reviews &amp; Ratings</b> - Seller ratings visible on listings</li>
+        <li><b>❤️ Favorites</b> - Save listings to personal collection</li>
+        <li><b>🔮 AI Price Prediction</b> - ML model predicts fair price</li>
+        <li><b>🔐 Complete Auth</b> - Signup/login/reset, profile image upload</li>
+        <li><b>📊 Dashboard</b> - My listings, analytics</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>📱 Screenshots</h2>
+      <div class="demo-images">
+        <img src="backend/static/uploads/1_cow-removable-blurry-white-background-600nw-2548678931.webp" alt="Home Feed" class="demo-img" title="Home with filters/search">
+        <img src="backend/static/uploads/user_2_1767313061_iStock-177426993-1024x614.jpg" alt="Post Ad" class="demo-img" title="Post Ad form with price predictor">
+        <img src="backend/static/uploads/2_lovely-white-baby-goat-running-on-grass-picture-id1281182694-1024x535.jpg" alt="Animal Detail" class="demo-img" title="Animal details page">
+        <img src="backend/static/uploads/user_2_1767957316_Arabian-dromedary-camel.webp" alt="Chat" class="demo-img" title="Real-time chat interface">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>🏗️ Architecture</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <h3 style="color:#48bb78; margin-bottom:1rem;">Frontend (React)</h3>
+          <ul style="list-style:none;">
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ App.jsx (Router)</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ Pages: Home, PostAd, Chat, Profile, Dashboard</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ Components: Navbar, Filters, AnimalCard</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ AuthContext</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:#3b82f6; margin-bottom:1rem;">Backend (FastAPI)</h3>
+          <ul style="list-style:none;">
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ /animals/ (CRUD)</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ /auth (JWT)</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ /ws/{user_id} (WebSocket)</li>
+            <li style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">✅ /predict-price/ (ML)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>🚀 API Endpoints</h2>
+      <div class="grid">
+        <div class="card">
+          <h4>Auth</h4>
+          <pre>POST /signup
+POST /login  
+POST /forgot-password
+POST /reset-password</pre>
+        </div>
+        <div class="card">
+          <h4>Animals</h4>
+          <pre>POST /animals/
+GET /animals/?type=cow&amp;city=Lahore
+GET /animals/{id}
+DELETE /animals/{id}</pre>
+        </div>
+        <div class="card">
+          <h4>Chat</h4>
+          <pre>WS /ws/{user_id}
+POST /messages/
+GET /messages/{user_id}</pre>
+        </div>
+        <div class="card">
+          <h4>ML</h4>
+          <pre>POST /predict-price/
+(weight, age, breed, color)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>📋 Quick Start</h2>
+      <div class="grid">
+        <div class="card">
+          <h4>Backend</h4>
+          <pre>cd backend
+uv sync
+uvicorn main:app --reload</pre>
+        </div>
+        <div class="card">
+          <h4>Frontend</h4>
+          <pre>cd frontend
+npm install
+npm run dev</pre>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:2rem;">
+        <p><b>Backend:</b> http://localhost:8000 | <b>Frontend:</b> http://localhost:5173</p>
+        <p>🐮 Start exploring! Signup → Post Ad → Chat with buyers</p>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

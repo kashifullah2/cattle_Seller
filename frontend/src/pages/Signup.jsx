@@ -3,7 +3,7 @@ import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, Mail, Phone, Lock, MapPin, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
-
+import farmHorse from '../assets/farm_horse.png';
 const Signup = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -41,7 +41,7 @@ const Signup = () => {
       <div className="hidden lg:flex w-1/2 bg-green-900 relative items-center justify-center overflow-hidden">
          <div className="absolute inset-0 bg-green-900/40 z-10 mix-blend-multiply"></div>
          <img 
-            src="https://images.unsplash.com/photo-1595878848136-398711417a81?q=80&w=2070&auto=format&fit=crop" 
+            src={farmHorse} 
             className="absolute inset-0 w-full h-full object-cover"
             alt="Farm Signup"
          />

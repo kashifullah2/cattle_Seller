@@ -45,8 +45,7 @@ class ReviewOut(BaseModel):
     rating: int
     comment: Optional[str]
     created_at: datetime
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 class MessageCreate(BaseModel):
     receiver_id: int
@@ -59,8 +58,7 @@ class MessageOut(BaseModel):
     content: str
     timestamp: datetime
     is_read: bool = False
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 class ChatContact(BaseModel):
     user_id: int
@@ -74,8 +72,7 @@ class ImageBase(BaseModel):
 
 class ImageOut(ImageBase):
     id: int
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 class SellerOut(BaseModel):
     id: int
@@ -86,8 +83,7 @@ class SellerOut(BaseModel):
     profile_image: Optional[str] = None
     average_rating: float = 0.0
     review_count: int = 0
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 class AnimalBase(BaseModel):
     name: Optional[str] = None
@@ -107,8 +103,7 @@ class AnimalOut(AnimalBase):
     seller: SellerOut
     images: List[ImageOut] = []
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 
 class UserUpdate(BaseModel):
@@ -124,5 +119,4 @@ class UserProfile(BaseModel):
     gender: Optional[str] = None
     address: Optional[str] = None
     profile_image: Optional[str] = None
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}

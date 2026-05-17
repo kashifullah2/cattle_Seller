@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import api from '../api';
 import Filters from '../components/Filters';
 import AnimalCard from '../components/AnimalCard';
-import SearchInput from '../components/SearchInput'; // <--- Import Search Component
-import { TrendingUp, ChevronRight, ChevronLeft, SlidersHorizontal, Search } from 'lucide-react';
+import SearchInput from '../components/SearchInput'; 
+import HeroSlider from '../components/HeroSlider';
+import { TrendingUp, ChevronRight, ChevronLeft, SlidersHorizontal, Search, Sparkles } from 'lucide-react';
 
 const Home = () => {
   const [animals, setAnimals] = useState([]);
@@ -62,21 +63,43 @@ const Home = () => {
     <div className="min-h-screen bg-[#f8fafc]">
       
       {/* --- HERO SECTION --- */}
-      <div className="bg-gray-900 pt-24 pb-36 text-center px-4 relative overflow-hidden">
-         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-900/40 via-gray-900/0 to-gray-900/0 pointer-events-none"></div>
+      <div className="relative h-[600px] flex items-center justify-center overflow-hidden">
+         <HeroSlider />
          
-         <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 relative z-10">
-            Find Your Next <span className="text-green-500">Investment</span>
-         </h1>
-         
-         {/* SEARCH BAR ADDED HERE */}
-         <div className="relative z-20">
-            <SearchInput onSearch={setSearchQuery} />
-         </div>
-         
-         <div className="flex justify-center gap-4 text-sm font-medium relative z-10 mt-6">
-            <div className="px-5 py-2 rounded-full bg-white/10 text-white backdrop-blur-md border border-white/10 flex items-center gap-2 shadow-lg">
-              <TrendingUp size={16} className="text-green-400"/> {animals.length} Active Listings
+         <div className="relative z-20 max-w-4xl mx-auto px-4 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30 text-xs font-bold mb-6 animate-bounce">
+               <Sparkles size={14} /> The #1 Animal Marketplace
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 leading-tight">
+               Find Your Next <br/>
+               <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Premium Investment</span>
+            </h1>
+            
+            <div className="max-w-2xl mx-auto">
+               <SearchInput onSearch={setSearchQuery} />
+            </div>
+            
+            <div className="flex justify-center gap-6 text-sm font-medium mt-10">
+               <div className="px-6 py-3 rounded-2xl bg-white/5 text-white backdrop-blur-md border border-white/10 flex items-center gap-3 shadow-2xl transition-all hover:bg-white/10 hover:border-white/20">
+                 <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <TrendingUp size={18} className="text-green-400"/>
+                 </div>
+                 <div className="text-left">
+                    <div className="text-lg font-bold leading-none">{animals.length}</div>
+                    <div className="text-[10px] text-gray-400 uppercase tracking-wider">Active Listings</div>
+                 </div>
+               </div>
+
+               <div className="px-6 py-3 rounded-2xl bg-white/5 text-white backdrop-blur-md border border-white/10 flex items-center gap-3 shadow-2xl transition-all hover:bg-white/10 hover:border-white/20">
+                 <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                    <Search size={18} className="text-blue-400"/>
+                 </div>
+                 <div className="text-left">
+                    <div className="text-lg font-bold leading-none">Verified</div>
+                    <div className="text-[10px] text-gray-400 uppercase tracking-wider">Sellers Only</div>
+                 </div>
+               </div>
             </div>
          </div>
       </div>
